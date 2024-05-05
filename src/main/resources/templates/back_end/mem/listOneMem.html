@@ -219,10 +219,15 @@
 		<main>
 
 			<div class="container">
+                <h1>會員資料</h1>
+                <a th:href="@{/mem/select}">回首頁</a>
+                <div class="successMsgs" th:if="${successMsgs}">
+                    <ul>
+                        <li th:each="success : ${successMsgs}" th:text="${success}"></li>
+                    </ul>
+                </div>
 				<table id="table-1" border="1">
-					<h1>會員資料</h1>
-					<a th:href="@{/mem/select}">回首頁</a>
-                    <h4><label th:text="${success}"></label></h4>
+
 				
 					<tr>
 						<th>項次</th>
@@ -244,7 +249,7 @@
 						<td th:text="${mem.memAcount}"></td>
 						<td th:text="${mem.memName}"></td>
 						<td th:text="${mem.memGender eq 'M' ? '男' : '女'}"></td>
-						<td th:text="${mem.memBirthday}"></td>
+						<td th:text="${#dates.format(mem.memBirthday, 'yyyy-MM-dd')}"></td>
 						<td th:text="${mem.memEmail}"></td>
 						<td th:text="${mem.memAddr}"></td>
 						<td th:text="${mem.memMobile}"></td>

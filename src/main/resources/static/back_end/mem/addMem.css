@@ -9,15 +9,12 @@ main {
     width: calc(50vw + 120px);
     border-radius: 6px;
     background-color: rgba(47, 34, 70, 0.8);
-  }
-  
-  aside:has(.sidebar.active)~main{
-    left: 320px;
-    width: 50vw;
-  }
+}
 
-
-
+aside:has(.sidebar.active)~main{
+left: 320px;
+width: 50vw;
+}
 
 
 ul {
@@ -36,4 +33,8 @@ a {
 
 a:hover {
     text-decoration: underline; 
+}
+
+div.errorMsgs li{
+    color: red;
 }

@@ -58,23 +58,15 @@ public class MemService {
     
     
     
+    //==================================================
+    public Mem getMemByAccount(String memAcount) {
+    	return repository.findByMemAcount(memAcount);
+    }
     
     
     
     
 
 
-    
-    
-	
-	
-	////////////////////////////////
-//	   public Mem getMemByAcount(String memAccount) {
-//		   return dao.getByAccount(memAccount);
-//	    }
-//	
-//
-//	   public Mem getMemByEmail(String memEmail) {
-//		   return dao.getByEmail(memEmail);
-//	   }
+   
 }

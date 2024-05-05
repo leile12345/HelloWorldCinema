@@ -54,7 +54,7 @@ public class IndexController_inSpringBoot {
 	}
     
     @GetMapping("/mem/listAllMem")
-	public String listAllEmp(Model model) {
+	public String listAllMem(Model model) {
 		return "back_end/mem/listAllMem";
 	}
     
@@ -65,9 +65,9 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
     
-//    @GetMapping("/mem/updateMem")
-//	public String updateEmp(Model model) {
-//		return "back_end/mem/updateMem";
+//    @GetMapping("/mem/login")
+//	public String updateMem(Model model) {
+//		return "front_end/mem/mem_login";
 //	}
 
 

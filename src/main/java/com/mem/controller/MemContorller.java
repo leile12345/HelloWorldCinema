@@ -43,7 +43,7 @@ public class MemContorller {
         }
         memSvc.addMem(mem);
         model.addAttribute("mem", mem);
-        model.addAttribute("success", "- (修改成功)");
+        model.addAttribute("successMsgs", "- (新增成功)");
         return "back_end/mem/listOneMem";
     }
 	
@@ -64,7 +64,7 @@ public class MemContorller {
 
 	        memSvc.updateMem(mem);
 
-	        model.addAttribute("success", "- (修改成功)");
+	        model.addAttribute("successMsgs", "- (修改成功)");
 	        model.addAttribute("mem", mem);
 	        return "back_end/mem/listOneMem";
 	    }
@@ -79,7 +79,7 @@ public class MemContorller {
 	            model.addAttribute("errorMsgs", "查無相關資料");
 	            return "back_end/mem/select";
 	        } else {
-	            model.addAttribute("memListData", list);
+	            model.addAttribute("AllMemListData", list);
 	            return "back_end/mem/listAllMem";
 	        }
 	    }
@@ -90,4 +90,17 @@ public class MemContorller {
 	        model.addAttribute("mem", mem);
 	        return "back_end/mem/listOneMem";
 	    }
+	    
+	    
+	    //==============================================
+//	    @PostMapping("login")
+//	    public String login(@RequestParam("memAcount") String memAcount, @RequestParam("memPassword") String memPassword, Model model) {
+//	    	Mem mem = memSvc.getMemByAccount(memAcount);
+//	    	
+//	    	if(mem!=null && mem.getMemPassword().equals(memPassword)) {
+//	    		return"front_end/mem/success";
+//	    	}
+//	    	model.addAttribute("errorMsgs", "會員帳號或密碼錯誤");
+//	    	return "front_end/mem/mem_login";
+//	    }
 }
