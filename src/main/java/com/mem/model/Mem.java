@@ -71,6 +71,7 @@ public class Mem {
 	private String memAddr;
 	
 	@NotEmpty(message="會員手機: 請勿空白")
+	@Pattern(regexp = "^09\\d{8}$", message = "會員手機: 格式錯誤")
 	@Column(name = "mem_mobile")
 	private String memMobile;
 	

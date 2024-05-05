@@ -88,3 +88,9 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+div.successMsgs li{
+  color: red;
+  margin: 0 40px;
+  list-style: none;
+}
