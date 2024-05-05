@@ -41,6 +41,16 @@ public class MemContorller {
         	model.addAttribute("errorMsgs", result.getAllErrors());
             return "back_end/mem/addMem";
         }
+        Mem existingMemE = memSvc.getMemByEmail(mem.getMemEmail());
+        Mem existingMemA = memSvc.getMemByAccount(mem.getMemAcount());
+        
+        if( existingMemE!=null ) {
+        	model.addAttribute("errorMsg", "已存在之會員信箱");
+            return "back_end/mem/addMem";
+        }else if( existingMemA!=null ) {
+        	model.addAttribute("errorMsg", "已存在之會員帳號");
+            return "back_end/mem/addMem";
+        }
         memSvc.addMem(mem);
         model.addAttribute("mem", mem);
         model.addAttribute("successMsgs", "- (新增成功)");
@@ -59,6 +69,12 @@ public class MemContorller {
 	    public String update(@Valid Mem mem, BindingResult result, Model model) {
 	        if (result.hasErrors()) {
 	        	model.addAttribute("errorMsgs", result.getAllErrors());
+	            return "back_end/mem/updateMem";
+	        }
+	       
+	        Mem existingMem = memSvc.getMemByEmail(mem.getMemEmail());
+	        if( existingMem!=null) {
+	        	model.addAttribute("errorMsg", "已存在之會員信箱");
 	            return "back_end/mem/updateMem";
 	        }
 

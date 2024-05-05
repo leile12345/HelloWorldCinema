@@ -63,6 +63,10 @@ public class MemService {
     	return repository.findByMemAcount(memAcount);
     }
     
+    public Mem getMemByEmail(String memEmail) {
+    	return repository.findByMemEmail(memEmail);
+    }
+    
     
     
     
