@@ -225,9 +225,15 @@
             
             <div class="errorMsgs" th:if="${errorMsgs}">
                 <ul>
-                    <li th:each="error : ${errorMsgs}" th:text="${error.defaultMessage}"></li>
+                    <li th:each="errors : ${errorMsgs}" th:text="${errors.defaultMessage}"></li>
                 </ul>
             </div>
+            <div class="errorMsgs" th:if="${errorMsg}">
+                <ul>
+                    <li th:each="error : ${errorMsg}" th:text="${error}"></li>
+                </ul>
+            </div>
+      
 
 			<form th:action="@{insert}" method="post" th:object="${mem}" enctype="multipart/form-data" name="form1">
                 <table>
