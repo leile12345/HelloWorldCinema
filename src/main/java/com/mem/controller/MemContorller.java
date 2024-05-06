@@ -115,7 +115,15 @@ public class MemContorller {
 		Mem mem = memSvc.getMemByAccount(memAcount);
 
 		if (mem != null && mem.getMemPassword().equals(memPassword)) {
-			return "front_end/mem/success";
+			if(mem.getMemStatus().equals("已驗證")) {
+				return "front_end/mem/success";				
+			}else if(mem.getMemStatus().equals("已停權") || mem.getMemStatus().equals("已註銷")){
+				model.addAttribute("errorMsgs", "無使用權限，詳情請洽客服");
+				return "front_end/mem/mem_login";
+			}else {
+				model.addAttribute("errorMsgs", "未驗證");		//		
+				return "front_end/mem/mem_login";
+			}
 		} else {
 			model.addAttribute("errorMsgs", "會員帳號或密碼錯誤");
 			return "front_end/mem/mem_login";
