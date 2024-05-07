@@ -107,15 +107,18 @@ public class MemContorller {
 		model.addAttribute("mem", mem);
 		return "back_end/mem/listOneMem";
 	}
-
-	// ==============================================
+	
+	
+	
+//========FrontEnd===========================================================================
+	
   @GetMapping("/login")
-	public String updateMem(Model model) {
+	public String login(Model model) {
 		return "front_end/mem/mem_login";
 	}
 	
 	@PostMapping("memLogin")
-	public String login(@RequestParam("memAcount") String memAcount, @RequestParam("memPassword") String memPassword,
+	public String loginMem(@RequestParam("memAcount") String memAcount, @RequestParam("memPassword") String memPassword,
 			Model model, HttpSession session) {
 
 		Mem mem = memSvc.getMemByAccount(memAcount);
@@ -123,7 +126,7 @@ public class MemContorller {
 		if (mem != null && mem.getMemPassword().equals(memPassword)) {
 			if(mem.getMemStatus().equals("已驗證")) {
 				session.setAttribute("loginSuccess", mem);
-				return "front_end/mem/success";				
+				return "front_end/mem/mem_Index";				
 			}else if(mem.getMemStatus().equals("已停權") || mem.getMemStatus().equals("已註銷")){
 				model.addAttribute("errorMsgs", "無使用權限，詳情請洽客服");
 				return "front_end/mem/mem_login";
@@ -136,6 +139,12 @@ public class MemContorller {
 			return "front_end/mem/mem_login";
 		}
 	}
+	//====================================
+	  @GetMapping("/logout")
+		public String logout(Model model, HttpSession session) {
+			session.removeAttribute("loginSuccess");
+		  	return "front_end/mem/mem_login";
+		}
 	
 	//=========================================================================================
 	@GetMapping("memUpdateF")
@@ -154,7 +163,7 @@ public class MemContorller {
 
 		Mem existingMem = memSvc.getMemByEmail(mem.getMemEmail());
 		if (existingMem != null && !existingMem.getMemId().equals(mem.getMemId())) {
-			model.addAttribute("errorMsgs", "已存在之會員信箱");
+			model.addAttribute("errorMsg", "已存在之會員信箱");
 			return "front_end/mem/updateMemF";
 		}
 
