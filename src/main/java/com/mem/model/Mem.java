@@ -1,6 +1,7 @@
 package com.mem.model;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -207,6 +208,28 @@ public class Mem {
 
 	public void setMemStatus(String memStatus) {
 		this.memStatus = memStatus;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(memAcount, memAddr, memBirthday, memEmail, memGender, memId, memMobile, memName,
+				memPassword, memStatus);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Mem other = (Mem) obj;
+		return Objects.equals(memAcount, other.memAcount) && Objects.equals(memAddr, other.memAddr)
+				&& Objects.equals(memBirthday, other.memBirthday) && Objects.equals(memEmail, other.memEmail)
+				&& Objects.equals(memGender, other.memGender) && Objects.equals(memId, other.memId)
+				&& Objects.equals(memMobile, other.memMobile) && Objects.equals(memName, other.memName)
+				&& Objects.equals(memPassword, other.memPassword) && Objects.equals(memStatus, other.memStatus);
 	}
 
 //	public Set<Booking> getBooking() {

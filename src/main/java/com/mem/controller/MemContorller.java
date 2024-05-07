@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,20 +109,61 @@ public class MemContorller {
 	}
 
 	// ==============================================
+  @GetMapping("/login")
+	public String updateMem(Model model) {
+		return "front_end/mem/mem_login";
+	}
+	
 	@PostMapping("memLogin")
 	public String login(@RequestParam("memAcount") String memAcount, @RequestParam("memPassword") String memPassword,
-			Model model) {
+			Model model, HttpSession session) {
 
 		Mem mem = memSvc.getMemByAccount(memAcount);
 
 		if (mem != null && mem.getMemPassword().equals(memPassword)) {
-			return "front_end/mem/success";
+			if(mem.getMemStatus().equals("已驗證")) {
+				session.setAttribute("loginSuccess", mem);
+				return "front_end/mem/success";				
+			}else if(mem.getMemStatus().equals("已停權") || mem.getMemStatus().equals("已註銷")){
+				model.addAttribute("errorMsgs", "無使用權限，詳情請洽客服");
+				return "front_end/mem/mem_login";
+			}else {
+				model.addAttribute("errorMsgs", "未驗證");		//		
+				return "front_end/mem/mem_login";
+			}
 		} else {
 			model.addAttribute("errorMsgs", "會員帳號或密碼錯誤");
 			return "front_end/mem/mem_login";
 		}
 	}
 	
+	//=========================================================================================
+	@GetMapping("memUpdateF")
+	public String updateMemF( Model model, HttpSession session) {
+		Mem mem = (Mem)session.getAttribute("loginSuccess");
+		model.addAttribute("mem", mem);
+		return "front_end/mem/updateMemF";
+	}
+
+	@PostMapping("updateF")
+	public String updateF(@Valid Mem mem, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("errorMsgs", result.getAllErrors());
+			return "front_end/mem/updateMemF";
+		}
+
+		Mem existingMem = memSvc.getMemByEmail(mem.getMemEmail());
+		if (existingMem != null && !existingMem.equals(mem)) {
+			model.addAttribute("errorMsgs", "已存在之會員信箱");
+			return "front_end/mem/updateMemF";
+		}
+
+		memSvc.updateMem(mem);
+
+		model.addAttribute("successMsgs", "- (修改成功)");
+		model.addAttribute("mem", mem);
+		return "front_end/mem/updateMemF";
+	}
 	
 //    @GetMapping("/signup")
 //    public String signupMem(Model model) {

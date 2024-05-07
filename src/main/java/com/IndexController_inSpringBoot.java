@@ -65,10 +65,7 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
     
-    @GetMapping("/mem/login")
-	public String updateMem(Model model) {
-		return "front_end/mem/mem_login";
-	}
+
 
 
 
