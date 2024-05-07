@@ -146,14 +146,14 @@ public class MemContorller {
 	}
 
 	@PostMapping("updateF")
-	public String updateF(@Valid Mem mem, BindingResult result, Model model) {
+	public String updateF(@Valid Mem mem, BindingResult result, Model model, HttpSession session) {
 		if (result.hasErrors()) {
 			model.addAttribute("errorMsgs", result.getAllErrors());
 			return "front_end/mem/updateMemF";
 		}
 
 		Mem existingMem = memSvc.getMemByEmail(mem.getMemEmail());
-		if (existingMem != null && !existingMem.equals(mem)) {
+		if (existingMem != null && !existingMem.getMemId().equals(mem.getMemId())) {
 			model.addAttribute("errorMsgs", "已存在之會員信箱");
 			return "front_end/mem/updateMemF";
 		}
@@ -162,6 +162,7 @@ public class MemContorller {
 
 		model.addAttribute("successMsgs", "- (修改成功)");
 		model.addAttribute("mem", mem);
+		session.setAttribute("loginSuccess", mem);
 		return "front_end/mem/updateMemF";
 	}
 	
