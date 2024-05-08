@@ -1,5 +1,6 @@
 package com.mem.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,7 +76,7 @@ public class MemContorller {
 		}
 
 		Mem existingMem = memSvc.getMemByEmail(mem.getMemEmail());
-		if (existingMem != null) {
+		if (existingMem != null && !existingMem.getMemId().equals(mem.getMemId())) {
 			model.addAttribute("errorMsg", "已存在之會員信箱");
 			return "back_end/mem/updateMem";
 		}
@@ -109,7 +111,42 @@ public class MemContorller {
 	}
 	
 	
+	@GetMapping("get_SuspendedMem")
+	public String suspendedMem_Display( Model model) {
+		
+		List<Mem> suspendedMem = new ArrayList<>();
+		suspendedMem.addAll(memSvc.getMemByStatus("已停權"));
+		suspendedMem.addAll(memSvc.getMemByStatus("已註銷"));
+		
+		List<Mem> list2 = memSvc.getAllMem();
+		model.addAttribute("AllMemListData", list2);
+		if (suspendedMem.isEmpty()) {
+			model.addAttribute("errorMsgs", "查無相關資料");
+			return "back_end/mem/select";
+		} else {
+			model.addAttribute("AllMemListData", suspendedMem);
+			return "back_end/mem/listAllMem";
+		}
+	}
 	
+	
+	
+    @GetMapping("/select")
+	public String select_page(Model model) {
+		return "back_end/mem/select";
+	}
+    
+    @GetMapping("/listAllMem")
+	public String listAllMem(Model model) {
+		return "back_end/mem/listAllMem";
+	}
+    
+    @ModelAttribute("AllMemListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
+	protected List<Mem> referenceListData(Model model) {
+		
+    	List<Mem> list = memSvc.getAllMem();
+		return list;
+	}
 //========FrontEnd===========================================================================
 	
   @GetMapping("/login")
@@ -175,31 +212,31 @@ public class MemContorller {
 		return "front_end/mem/updateMemF";
 	}
 	
-//    @GetMapping("/signup")
-//    public String signupMem(Model model) {
-//    	Mem mem = new Mem();
-//		model.addAttribute("mem", mem);
-//    	return "front_end/mem/mem_signup";
-//    }
-//	@PostMapping("memSignUp")
-//	public String signup(@Valid Mem mem, BindingResult result, Model model) {
-//		
-//		if (result.hasErrors()) {
-//			model.addAttribute("mem", mem);
-//			model.addAttribute("errorMsgs", result.getAllErrors());
-//			return "front_end/mem/mem_signup";
-//		}
-//		Mem existingMemE = memSvc.getMemByEmail(mem.getMemEmail());
-//		Mem existingMemA = memSvc.getMemByAccount(mem.getMemAcount());
-//
-//		if (existingMemE != null) {
-//			model.addAttribute("errorMsg", "已存在之會員信箱");
-//			return "front_end/mem/mem_signup";
-//		} else if (existingMemA != null) {
-//			model.addAttribute("errorMsg", "已存在之會員帳號");
-//			return "front_end/mem/mem_signup";
-//		}
-//		memSvc.addMem(mem);
-//		return "front_end/mem/success";
-//	}
+    @GetMapping("/signup")
+    public String signupMem(Model model) {
+    	Mem mem = new Mem();
+		model.addAttribute("mem", mem);
+    	return "front_end/mem/mem_signup";
+    }
+	@PostMapping("memSignUp")
+	public String signup(@Valid Mem mem, BindingResult result, Model model) {
+		
+		if (result.hasErrors()) {
+			model.addAttribute("mem", mem);
+			model.addAttribute("errorMsgs", result.getAllErrors());
+			return "front_end/mem/mem_signup";
+		}
+		Mem existingMemE = memSvc.getMemByEmail(mem.getMemEmail());
+		Mem existingMemA = memSvc.getMemByAccount(mem.getMemAcount());
+
+		if (existingMemE != null) {
+			model.addAttribute("errorMsg", "已存在之會員信箱");
+			return "front_end/mem/mem_signup";
+		} else if (existingMemA != null) {
+			model.addAttribute("errorMsg", "已存在之會員帳號");
+			return "front_end/mem/mem_signup";
+		}
+		memSvc.addMem(mem);
+		return "front_end/mem/success";
+	}
 }

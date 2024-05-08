@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>會員登入</title>
+    <title>會員註冊</title>
     <!-- ======================== -->
 
     <meta name="description" content="世界影城、提供電影介紹、場次時刻表、購票資訊、會員網路訂票服務、電影周邊商品販售、影廳場地租借服務">
@@ -98,7 +98,7 @@
                         </ul>
                     </li>
                     <li class="nav__menu-item">
-                        <a href=""><h4 class="neon2">Log In</h4></a>
+                        <a th:href="@{/mem/login}"><h4 class="neon2">Log In</h4></a>
                         <ul class="nav__submenu">
                             <li class="nav__submenu-item">
                                 <a href=""></a>
@@ -119,7 +119,7 @@
 
 
     <section class="container forms">
-        <form th:action="@{insert}" method="post" th:object="${mem}" enctype="multipart/form-data"  id="regForm">
+        <form th:action="@{/mem/memSignUp}" method="post" th:object="${mem}" enctype="multipart/form-data"  id="regForm">
             <h1>會員註冊</h1>
             <div class="errorMsgs" th:if="${errorMsgs}">
                 <ul>
@@ -148,11 +148,11 @@
             <div class="tab">
                 <p><label>帳號：<input type="text" name="memAccount" th:field="*{memAcount}" size="45"/></label></p>
                 <p>
-                    <label>密碼：<input type="password" name="memPassword" th:field="*{memPassword}" size="45"/></label>
+                    <label>密碼：<input type="password" name="memPassword" th:field="*{memPassword}" size="45" id="ps1"/></label>
                     <button class="eye" type="button" onclick="eyeSwitch(0)"><img id="eye1" class="eye" th:src="@{/front_end/mem/img/eye.svg}"></button>
                 </p>
                 <p>
-                    <label>確認密碼：<input type="password" class="password" id="ps2"  ></label>  
+                    <label>確認密碼：<input type="password" class="password" id="ps2" /></label>  
                     <button class="eye" type="button" onclick="eyeSwitch(1)"><img id="eye2" class="eye" th:src="@{/front_end/mem/img/eye.svg}" ></button>                
                 </p>
 
@@ -246,6 +246,6 @@
 
 
 
-    <script th:src="@{/front_end/js/index.js}"src="../../../static/front_end/mem/mem_sign_up.js"></script>
+    <script th:src="@{/front_end/mem/mem_sign_up.js}"src="../../../static/front_end/mem/mem_sign_up.js"></script>
 </body>
 </html>

@@ -67,7 +67,9 @@ public class MemService {
     	return repository.findByMemEmail(memEmail);
     }
     
-    
+    public List<Mem> getMemByStatus(String memStatus){
+    	return repository.findByMemStatus(memStatus);
+    }
     
     
 

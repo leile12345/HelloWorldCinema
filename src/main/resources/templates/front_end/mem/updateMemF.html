@@ -97,7 +97,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav__menu-item">
+                    <!-- <li class="nav__menu-item">
                         <a href=""><h4 class="neon2">Log In</h4></a>
                         <ul class="nav__submenu">
                             <li class="nav__submenu-item">
@@ -105,6 +105,20 @@
                             </li>
 
                         </ul>
+                    </li> -->
+                    <li class="nav__menu-item" th:if="${session.loginSuccess != null}">
+                        <a href=""><h4 class="neon2" th:text="${#strings.substring(session.loginSuccess.memName, 0, 3)}" ></h4></a>
+                        <ul class="nav__submenu">
+                            <li class="nav__submenu-item">
+                                <a href="">會員專區</a>
+                            </li>
+                            <li class="nav__submenu-item">
+                                <a th:href="@{/mem/logout}">Log Out</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav__menu-item" th:unless="${session.loginSuccess != null}">
+                        <a th:href="@{/mem/login}"><h4 class="neon2" >Log In</h4></a>
                     </li>
                 </ul>
             </nav>
@@ -127,7 +141,12 @@
                    <!-- 錯誤列表 -->
                    <div class="errorMsgs" th:if="${errorMsgs}">
                         <ul>
-                            <li th:each="error : ${errorMsgs}" th:text="${error}"></li>
+                            <li th:each="errors : ${errorMsgs}" th:text="${errors.defaultMessage}"></li>
+                        </ul>
+                    </div>
+                    <div class="errorMsgs" th:if="${errorMsg}">
+                        <ul>
+                            <li th:each="error : ${errorMsg}" th:text="${error}"></li>
                         </ul>
                     </div>
                     <div class="successMsgs" th:if="${successMsgs}">
