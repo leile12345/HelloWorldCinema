@@ -48,22 +48,22 @@ public class IndexController_inSpringBoot {
 //    
   
     //=========== 以下第63~75行是提供給 /src/main/resources/templates/back-end/emp/select_page.html 與 listAllEmp.html 要使用的資料 ===================   
-    @GetMapping("/mem/select")
-	public String select_page(Model model) {
-		return "back_end/mem/select";
-	}
-    
-    @GetMapping("/mem/listAllMem")
-	public String listAllMem(Model model) {
-		return "back_end/mem/listAllMem";
-	}
-    
-    @ModelAttribute("AllMemListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
-	protected List<Mem> referenceListData(Model model) {
-		
-    	List<Mem> list = memSvc.getAllMem();
-		return list;
-	}
+//    @GetMapping("/mem/select")
+//	public String select_page(Model model) {
+//		return "back_end/mem/select";
+//	}
+//    
+//    @GetMapping("/mem/listAllMem")
+//	public String listAllMem(Model model) {
+//		return "back_end/mem/listAllMem";
+//	}
+//    
+//    @ModelAttribute("AllMemListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
+//	protected List<Mem> referenceListData(Model model) {
+//		
+//    	List<Mem> list = memSvc.getAllMem();
+//		return list;
+//	}
     
 
 

@@ -213,9 +213,10 @@
 
         <main>
                 <h1>會員管理</h1>
+                <h4><a th:href="@{/mem/get_SuspendedMem}">帳號停權／復權</a></h4>
+                <br><br>
                 <h3>會員資料查詢</h3>
                 <h4><a th:href="@{/mem/listAllMem}">所有會員</a></h4>
-                <br><br>
                     
                 <form method="post" th:action="@{/mem/getOne_For_Display}">
                     <h4>選擇會員編號：
@@ -238,7 +239,7 @@
 
                     <div class="row">
                         <label for="memId">輸入會員編號(例如：240001)： </label>  
-                        <input type="number" name="memId" maxlength="6">
+                        <input type="text" name="memId" maxlength="6" minlength="6">
                     </div>
                     <br>
                     <div class="row">
@@ -248,7 +249,7 @@
                     <br>
                     <div class="row">
                         <label for="memMobile">輸入會員手機： </label>  
-                        <input type="number" name="memMobile" maxlength="10" >
+                        <input type="text" name="memMobile" maxlength="10" >
                     </div>   
                     <br>
                     <div class="row">

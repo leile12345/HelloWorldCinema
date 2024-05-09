@@ -1,7 +1,7 @@
 var input_el = document.querySelectorAll("input");
 input_el.forEach(e => {
     e.addEventListener("keyup", function(f){
-    console.log(f);
+    // console.log(f);
     if(f.key == "Enter"){
         document.getElementById("nextBtn").click();
     }
