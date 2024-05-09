@@ -143,7 +143,7 @@ public class MemContorller {
 		return "back_end/mem/listAllMem";
 	}
     
-    @ModelAttribute("AllMemListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
+    @ModelAttribute("AllMemListData")  
 	protected List<Mem> referenceListData(Model model) {
 		
     	List<Mem> list = memSvc.getAllMem();
@@ -219,6 +219,7 @@ public class MemContorller {
     @GetMapping("/signup")
     public String signupMem(Model model) {
     	Mem mem = new Mem();
+    	mem.setMemStatus("未驗證");
 		model.addAttribute("mem", mem);
     	return "front_end/mem/mem_signup";
     }

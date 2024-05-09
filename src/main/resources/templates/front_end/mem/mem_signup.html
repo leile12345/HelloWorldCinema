@@ -131,7 +131,12 @@
                     <li th:each="error : ${errorMsg}" th:text="${error}"></li>
                 </ul>
             </div>
-            <span id="Error" class="error"></span>
+            <div class="errorMsgs2" >
+                <ul>
+                    <li id="Error" class="error"></li>
+                </ul>
+            </div>
+          
             
             <!-- One "tab" for each step in the form: -->
             <div class="tab">
@@ -164,7 +169,7 @@
             <p><label>手機：<input type="text" name="memMobile"  th:field="*{memMobile}" size="45" maxlength="10"/></label></p>
             </div>
             
-            <input type="hidden" name="memStatus"  th:field="*{memStatus}" th:value="${'已驗證'}" size="45" />
+            <input type="hidden" name="memStatus"  th:field="*{memStatus}" th:value="${'未驗證'}" size="45" />
             
             <div style="overflow:auto;">
             <div>

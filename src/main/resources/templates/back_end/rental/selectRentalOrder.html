@@ -1,19 +1,16 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
 
 	    <meta charset="UTF-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>場地租借訂單查詢</title>
+        <title>場地租借</title>
     
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <link rel="stylesheet" href="../css/management.css">
+        <link th:href="@{https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css}" rel='stylesheet'>
+        <link rel="stylesheet" type="text/css"  th:href="@{/back_end/management.css}" href="../../../static/back_end/management.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <link rel="stylesheet" href="./css/selectRentalOrder.css">
+        <link rel="stylesheet" type="text/css" th:href="@{/back_end/rental/selectRentalOrder.css}" href="../../../static/back_end/rental/selectRentalOrder.css">
 
 
     </head>
@@ -33,7 +30,7 @@
                         <i class="bx bx-menu" id="btn"></i>
                     </div>
                     <div class="user">
-                        <img src="../img/hakunamatata.jpg" alt="fang" class="user-img">
+                        <img th:src="@{/back_end/img/hakunamatata.jpg}" alt="fang" class="user-img">
                         <div>
                             <p class="bold">Client B.</p>
                             <p>Admin</p>
@@ -68,17 +65,17 @@
         
                         </li>
                         <li>
-                            <a href="">
+                            <a th:href="@{/mem/select}">
                                 <i class='bx bx-chalkboard'></i>
                                 <span class="nav-item">會員管理</span>
                             </a>
                             <span class="tooltip">會員管理</span>
         
                             <div class="side">
-                                <a class="items" href="">
+                                <a class="items" th:href="@{/mem/select}">
                                     <span class="itemstooltip">會員查詢</span>
                                 </a>
-                                <a class="items" href="">
+                                <a class="items" th:href="@{/mem/get_SuspendedMem}">
                                     <span class="itemstooltip">帳號停權/復權</span>
                                 </a>
                                 <a class="items" href="">
@@ -148,7 +145,7 @@
                             </div>
                         </li>
                         <li>
-                            <a href="">
+                            <a th:href="@{/rental/select}">
                                 <i class='bx bxs-shopping-bag'></i>
                                 <span class="nav-item">場地租借</span>
                             </a>
@@ -220,10 +217,11 @@
             <table>
                 <tr>
                     <td> 
-                        <a href='${pageContext.request.contextPath}/back_end/rental/rental.do?action=getAll'>所有訂單</a>  
+                        <!-- <a href='${pageContext.request.contextPath}/back_end/rental/rental.do?action=getAll'>所有訂單</a> -->
+                        <a th:href="@{/rental/listAllRentalOrder}">所有訂單</a>
                     </td>
                     <td>
-                        <a href="">租借訂單審核</a>
+                        <a th:href="@{/rental/get_RentalOrder_For_Review}">租借訂單審核</a>
                     </td>
                 </tr>
             </table>
@@ -231,78 +229,75 @@
             <br><br>
             <h3>場地租借訂單查詢</h3>
             
-            <c:if test="${not empty errorMsgs}">
-                <font style="color:red">請修正以下錯誤:</font>
-                
-                    <c:forEach var="message" items="${errorMsgs}">
-                        <li style="color:red">${message}</li>
-                    </c:forEach>
-                
-            </c:if>
+            <div class="errorMsgs" th:if="${errorMsgs}">
+                <ul>
+                    <li th:each="errors : ${errorMsgs}" th:text="${errors.defaultMessage}"></li>
+                </ul>
+            </div>
+            <div class="errorMsgs" th:if="${errorMsg}">
+                <ul>
+                    <li th:each="error : ${errorMsg}" th:text="${error}"></li>
+                </ul>
+            </div>
+            <!-- ================================================================= -->
             
-            
+            <form method="post" th:action="@{/rental/getOne_For_Display}">
+                <h4>選擇訂單編號：
+                <select name="rentalId">
+                     <option th:each="rental : ${AllRentalOrderListData}" th:value="${rental.rentalId}" th:text="${rental.rentalId}"></option>
+                </select>
+                <input class="submit1" type="submit" value="送出"></h4>
+            </form><br><hr><br>    
+           
+            <h4>萬用複合查詢：</h4>
+            <div class="errorMsgs" th:if="${errorMsgs}">
+                <ul>
+                    <li th:each="error : ${errorMsgs}" th:text="${error}"></li>
+                </ul>
+            </div>
+            <br>
+            <form method="post" th:action="@{/rental/listRentalOrders_ByCompositeQuery}">
 
+               
 
-
-            <jsp:useBean id="rentalSvc" scope="page" class="service.RentalOrderService" />
-
-            <form action="${pageContext.request.contextPath}/back_end/rental/rental.do" method="post">
-                
                 <div class="row">
-                    <label for="rentalId">訂單編號 (如50000001)：</label>  
-                    <input type="text" name="rentalId">
+                    <label for="rentalId">輸入訂單編號(例如：50000001)： </label>  
+                    <input type="text" name="rentalId" maxlength="8" minlength="8">
                 </div>
-                    
-                  
                 <br>
                 <div class="row">
-                    <label for="screenId">租借影廳：</label>
-                    <select  name="screenId">
+                    <label for="screenId">租借影廳：</label>  
+                    <select name="screenId">
                         <option value="">選取影廳</option>
                         <option value="A廳">A廳</option>
                         <option value="B廳">B廳</option>
                         <option value="C廳">C廳</option>
                         <option value="D廳">D廳</option>
                     </select>
-                </div>
+                </div> 
                 <br>
-
-
                 <div class="row">
                     <label for="memAccount">會員帳號：</label>  
                     <input type="text" name="memAccount">
                 </div>
-
-                <br>
+                <br>  
                 <div class="row">
 
                     <label >租借日期間範圍：</label>
                     <input type="date" name="startdate"> ～ <input type="date" name="enddate">
-                </div>
-                
+                </div>  
                 <br>
-                
                 <div class="row">
-                    <input class="submit" type="submit" value="查詢">
-                    <input type="hidden" name="action" value="compositeQuery">
-
+                    <input type="submit" class="submit" value="送出">
                 </div>
-            </form>
-        
-            
-              
-            
-
                 
-            
-            
-        
-          
+            </form>
+
             
         </main>   
     
     
-        <script src="../../back_end/js/management.js"></script>
+        <script th:src="@{/back_end/js/management.js}"></script>
 
     </body>
 </html>

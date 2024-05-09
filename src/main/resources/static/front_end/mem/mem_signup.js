@@ -23,7 +23,7 @@ if (n == 0) {
     document.getElementById("prevBtn").style.display = "inline";
 }
 if (n == (x.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
+    document.getElementById("nextBtn").innerHTML = "註冊";
 } else {
     document.getElementById("nextBtn").innerHTML = "→";
 }
@@ -41,8 +41,24 @@ function nextPrev(n) {
         var pass1 = document.getElementById("ps1").value;
         var pass2 = document.getElementById("ps2").value;
         if (pass1 !== pass2) {
-            alert("您輸入的兩個密碼並不相符，請再試一次。");
+            document.getElementById("ps1").className += " invalid";
+            document.getElementById("ps2").className += " invalid";
+
+            var existingErrorMsg = document.querySelector(".errorMsgs2 ul li.passError");
+            if (!existingErrorMsg) {
+                let errorMsg_el = document.createElement("li");
+                errorMsg_el.className = "passError";
+                errorMsg_el.innerText = "您輸入的兩個密碼並不相符，請再試一次。";
+
+                document.querySelector(".errorMsgs2 ul").appendChild(errorMsg_el);
+            }
             return false;
+        } else {
+            // 清除 passError 错误消息
+            var passErrorElement = document.querySelector(".errorMsgs2 ul li.passError");
+            if (passErrorElement) {
+                passErrorElement.remove();
+            }
         }
     }
 
@@ -124,24 +140,11 @@ function eyeSwitch(i) {
 
 }
 
-//=======================
-function validate(){
-
-    if (currentTab === 1 && n === 1) {
-        var pass1 = document.getElementById("ps1").value;
-        var pass2 = document.getElementById("ps2").value;
-        if (pass1 !== pass2) {
-            alert("Passwords do not match!");
-            return false;
-        }
-    }
-}
-
-///////////////////////////////////////////////////
 
 
 
-// 帳號唯一性驗證函數
+
+
 function checkUniqueAccount() {
     let account = document.getElementById("memAccount1").value;
     
@@ -151,47 +154,46 @@ function checkUniqueAccount() {
         data: { memAcount: account },
         success: function(response) {
             if (response.exists) {
-                // 如果帐号已存在，显示错误消息
                 document.getElementById("Error").innerText = "已存在之會員帳號";
+                document.getElementById("memAccount1").className+= " invalid";
+                document.getElementById("nextBtn").disabled = true;
             } else {
-                // 如果帐号不存在，清除错误消息
                 document.getElementById("Error").innerText = "";
+                document.getElementById("nextBtn").disabled = false;
             }
         },
 
     });
 }
 
-// 郵件地址唯一性驗證函數
+
 function checkUniqueEmail() {
     let email = document.getElementById("memEmail1").value;
-    // 向後端發送郵件地址驗證請求
+
     $.ajax({
         url: "/checkEmail",
         type: "GET",
         data: {memEmail: email},
         success: function(response) {
-            // 在成功接收到後端響應後處理
             if (response.exists) {
-                // 如果郵件地址已存在，顯示錯誤消息
                 document.getElementById("Error").innerText = "已存在之會員信箱";
+                document.getElementById("memEmail1").className+= " invalid";
+                document.getElementById("nextBtn").disabled = true;
             } else {
-                // 如果郵件地址不存在，清除錯誤消息
                 document.getElementById("Error").innerText = "";
+                document.getElementById("nextBtn").disabled = false;
             }
         }
     });
 }
 
-
-// 在下面添加调用帐号和邮箱地址唯一性验证函数的逻辑
-// 获取帐号输入框
 var accountInput = document.getElementById("memAccount1");
-// 绑定失去焦点事件，调用帐号唯一性验证函数
-
 accountInput.addEventListener("blur", checkUniqueAccount);
 
-// 获取邮箱地址输入框
 var emailInput = document.getElementById("memEmail1");
-// 绑定失去焦点事件，调用邮箱地址唯一性验证函数
 emailInput.addEventListener("blur", checkUniqueEmail);
+
+
+document.getElementById("nextBtn").addEventListener("click",function(){
+    document.getElementById("passError").innerText = "";
+});
