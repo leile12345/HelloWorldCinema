@@ -3,6 +3,7 @@ package com.mem.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.mem.model.Mem;
 import com.mem.model.MemService;
@@ -212,6 +214,8 @@ public class MemContorller {
 		return "front_end/mem/updateMemF";
 	}
 	
+	
+	//===================================
     @GetMapping("/signup")
     public String signupMem(Model model) {
     	Mem mem = new Mem();
@@ -237,6 +241,32 @@ public class MemContorller {
 			return "front_end/mem/mem_signup";
 		}
 		memSvc.addMem(mem);
-		return "front_end/mem/success";
+		return "front_end/mem/signup_success";
 	}
+	
+
+	
+	
 }
+
+
+
+//=========================
+@RestController
+class MemController{
+	@Autowired
+	MemService memSvc;
+	
+	@GetMapping("/checkAccount")
+	 public Map<String, Boolean> checkAccount(@RequestParam("memAcount") String memAcount, Model model) {
+	        Map<String, Boolean> response = new HashMap<>();
+	        response.put("exists", (memSvc.getMemByAccount(memAcount)!=null));
+	        return response;
+	    }
+	@GetMapping("/checkEmail")
+	public Map<String, Boolean> checkEmail(@RequestParam("memEmail") String memEmail, Model model) {
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("exists", (memSvc.getMemByEmail(memEmail)!=null));
+		return response;
+	}
+ }

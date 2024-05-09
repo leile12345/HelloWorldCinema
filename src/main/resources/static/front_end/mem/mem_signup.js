@@ -95,7 +95,7 @@ for (i = 0; i < x.length; i++) {
 x[n].className += " active";
 }
 
-//=============eye-slash=================================================================
+//=============================================================================
 
 function eyeSwitch(i) {
     switch (i){
@@ -124,7 +124,7 @@ function eyeSwitch(i) {
 
 }
 
-//======PASSWORD=VALIDATE========
+//=======================
 function validate(){
 
     if (currentTab === 1 && n === 1) {
@@ -137,3 +137,61 @@ function validate(){
     }
 }
 
+///////////////////////////////////////////////////
+
+
+
+// 帳號唯一性驗證函數
+function checkUniqueAccount() {
+    let account = document.getElementById("memAccount1").value;
+    
+    $.ajax({
+        url: "/checkAccount",
+        type: "GET",
+        data: { memAcount: account },
+        success: function(response) {
+            if (response.exists) {
+                // 如果帐号已存在，显示错误消息
+                document.getElementById("Error").innerText = "已存在之會員帳號";
+            } else {
+                // 如果帐号不存在，清除错误消息
+                document.getElementById("Error").innerText = "";
+            }
+        },
+
+    });
+}
+
+// 郵件地址唯一性驗證函數
+function checkUniqueEmail() {
+    let email = document.getElementById("memEmail1").value;
+    // 向後端發送郵件地址驗證請求
+    $.ajax({
+        url: "/checkEmail",
+        type: "GET",
+        data: {memEmail: email},
+        success: function(response) {
+            // 在成功接收到後端響應後處理
+            if (response.exists) {
+                // 如果郵件地址已存在，顯示錯誤消息
+                document.getElementById("Error").innerText = "已存在之會員信箱";
+            } else {
+                // 如果郵件地址不存在，清除錯誤消息
+                document.getElementById("Error").innerText = "";
+            }
+        }
+    });
+}
+
+
+// 在下面添加调用帐号和邮箱地址唯一性验证函数的逻辑
+// 获取帐号输入框
+var accountInput = document.getElementById("memAccount1");
+// 绑定失去焦点事件，调用帐号唯一性验证函数
+
+accountInput.addEventListener("blur", checkUniqueAccount);
+
+// 获取邮箱地址输入框
+var emailInput = document.getElementById("memEmail1");
+// 绑定失去焦点事件，调用邮箱地址唯一性验证函数
+emailInput.addEventListener("blur", checkUniqueEmail);
