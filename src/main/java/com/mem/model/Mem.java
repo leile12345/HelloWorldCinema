@@ -22,6 +22,8 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.rental.model.RentalOrder;
+
 //import entity.Booking;
 //import entity.MerchOrder;
 //import entity.Message;
@@ -83,8 +85,8 @@ public class Mem {
 //	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
 //	private Set<Booking> booking;
 //	
-//	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
-//	private Set<RentalOrder> rentalOrder;
+	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
+	private Set<RentalOrder> rentalOrder;
 //	
 //	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
 //	private Set<MerchOrder> merchOrder;
@@ -240,13 +242,13 @@ public class Mem {
 //		this.booking = booking;
 //	}
 //
-//	public Set<RentalOrder> getRentalOrder() {
-//		return rentalOrder;
-//	}
-//
-//	public void setRentalOrder(Set<RentalOrder> rentalOrder) {
-//		this.rentalOrder = rentalOrder;
-//	}
+	public Set<RentalOrder> getRentalOrder() {
+		return rentalOrder;
+	}
+
+	public void setRentalOrder(Set<RentalOrder> rentalOrder) {
+		this.rentalOrder = rentalOrder;
+	}
 //
 //	public Set<MerchOrder> getMerchOrder() {
 //		return merchOrder;

@@ -23,7 +23,7 @@ if (n == 0) {
     document.getElementById("prevBtn").style.display = "inline";
 }
 if (n == (x.length - 1)) {
-    document.getElementById("nextBtn").innerHTML = "Submit";
+    document.getElementById("nextBtn").innerHTML = "註冊";
 } else {
     document.getElementById("nextBtn").innerHTML = "→";
 }
@@ -41,8 +41,24 @@ function nextPrev(n) {
         var pass1 = document.getElementById("ps1").value;
         var pass2 = document.getElementById("ps2").value;
         if (pass1 !== pass2) {
-            alert("您輸入的兩個密碼並不相符，請再試一次。");
+            document.getElementById("ps1").className += " invalid";
+            document.getElementById("ps2").className += " invalid";
+
+            var existingErrorMsg = document.querySelector(".errorMsgs2 ul li.passError");
+            if (!existingErrorMsg) {
+                let errorMsg_el = document.createElement("li");
+                errorMsg_el.className = "passError";
+                errorMsg_el.innerText = "您輸入的兩個密碼並不相符，請再試一次。";
+
+                document.querySelector(".errorMsgs2 ul").appendChild(errorMsg_el);
+            }
             return false;
+        } else {
+            // 清除 passError 错误消息
+            var passErrorElement = document.querySelector(".errorMsgs2 ul li.passError");
+            if (passErrorElement) {
+                passErrorElement.remove();
+            }
         }
     }
 
@@ -95,7 +111,7 @@ for (i = 0; i < x.length; i++) {
 x[n].className += " active";
 }
 
-//=============eye-slash=================================================================
+//=============================================================================
 
 function eyeSwitch(i) {
     switch (i){
@@ -124,16 +140,60 @@ function eyeSwitch(i) {
 
 }
 
-//======PASSWORD=VALIDATE========
-function validate(){
 
-    if (currentTab === 1 && n === 1) {
-        var pass1 = document.getElementById("ps1").value;
-        var pass2 = document.getElementById("ps2").value;
-        if (pass1 !== pass2) {
-            alert("Passwords do not match!");
-            return false;
-        }
-    }
+
+
+
+
+function checkUniqueAccount() {
+    let account = document.getElementById("memAccount1").value;
+    
+    $.ajax({
+        url: "/checkAccount",
+        type: "GET",
+        data: { memAcount: account },
+        success: function(response) {
+            if (response.exists) {
+                document.getElementById("Error").innerText = "已存在之會員帳號";
+                document.getElementById("memAccount1").className+= " invalid";
+                document.getElementById("nextBtn").disabled = true;
+            } else {
+                document.getElementById("Error").innerText = "";
+                document.getElementById("nextBtn").disabled = false;
+            }
+        },
+
+    });
 }
 
+
+function checkUniqueEmail() {
+    let email = document.getElementById("memEmail1").value;
+
+    $.ajax({
+        url: "/checkEmail",
+        type: "GET",
+        data: {memEmail: email},
+        success: function(response) {
+            if (response.exists) {
+                document.getElementById("Error").innerText = "已存在之會員信箱";
+                document.getElementById("memEmail1").className+= " invalid";
+                document.getElementById("nextBtn").disabled = true;
+            } else {
+                document.getElementById("Error").innerText = "";
+                document.getElementById("nextBtn").disabled = false;
+            }
+        }
+    });
+}
+
+var accountInput = document.getElementById("memAccount1");
+accountInput.addEventListener("blur", checkUniqueAccount);
+
+var emailInput = document.getElementById("memEmail1");
+emailInput.addEventListener("blur", checkUniqueEmail);
+
+
+document.getElementById("nextBtn").addEventListener("click",function(){
+    document.getElementById("passError").innerText = "";
+});

@@ -131,7 +131,12 @@
                     <li th:each="error : ${errorMsg}" th:text="${error}"></li>
                 </ul>
             </div>
-            
+            <div class="errorMsgs2" >
+                <ul>
+                    <li id="Error" class="error"></li>
+                </ul>
+            </div>
+          
             
             <!-- One "tab" for each step in the form: -->
             <div class="tab">
@@ -146,7 +151,7 @@
             </div>
             
             <div class="tab">
-                <p><label>帳號：<input type="text" name="memAccount" th:field="*{memAcount}" size="45"/></label></p>
+                <p><label>帳號：<input type="text" name="memAcount" th:field="*{memAcount}" size="45" id="memAccount1"/></label></p>
                 <p>
                     <label>密碼：<input type="password" name="memPassword" th:field="*{memPassword}" size="45" id="ps1"/></label>
                     <button class="eye" type="button" onclick="eyeSwitch(0)"><img id="eye1" class="eye" th:src="@{/front_end/mem/img/eye.svg}"></button>
@@ -159,12 +164,12 @@
             </div>
             
             <div class="tab">
-            <p><label>信箱：<input type="text" name="memEmail" th:field="*{memEmail}" size="45"/></label></p>
+            <p><label>信箱：<input type="text" name="memEmail" th:field="*{memEmail}" size="45" id="memEmail1"/></label></p>
             <p><label>地址：<input type="text" name="memAddr" th:field="*{memAddr}" size="45"/></label></p>
             <p><label>手機：<input type="text" name="memMobile"  th:field="*{memMobile}" size="45" maxlength="10"/></label></p>
             </div>
             
-    
+            <input type="hidden" name="memStatus"  th:field="*{memStatus}" th:value="${'未驗證'}" size="45" />
             
             <div style="overflow:auto;">
             <div>
@@ -245,7 +250,8 @@
 
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <script th:src="@{/front_end/mem/mem_sign_up.js}"src="../../../static/front_end/mem/mem_sign_up.js"></script>
+    <script th:src="@{/front_end/mem/mem_signup.js}" src="../../../static/front_end/mem/mem_signup.js"></script>
 </body>
 </html>
