@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mem.model.Mem;
 import com.rental.model.RentalOrder;
 
 import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_RentalOrder3;
@@ -52,4 +53,6 @@ public class RentalOrderService {
     public List<RentalOrder> getRentalOrderByResult(String result){
     	return repository.findRentalOrderByResult(result);
     } 
+    
+
 }

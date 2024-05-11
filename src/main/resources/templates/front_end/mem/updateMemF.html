@@ -110,7 +110,7 @@
                         <a href=""><h4 class="neon2" th:text="${#strings.substring(session.loginSuccess.memName, 0, 3)}" ></h4></a>
                         <ul class="nav__submenu">
                             <li class="nav__submenu-item">
-                                <a href="">會員專區</a>
+                                <a th:href="@{/mem/memIndexF}">會員專區</a>
                             </li>
                             <li class="nav__submenu-item">
                                 <a th:href="@{/mem/logout}">Log Out</a>

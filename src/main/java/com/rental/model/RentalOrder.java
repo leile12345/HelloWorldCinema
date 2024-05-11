@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class RentalOrder {
 	@Column(name = "rental_id")
 	private Integer rentalId;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "mem_id", referencedColumnName = "mem_id")
 	private Mem mem;
 
@@ -231,13 +232,13 @@ public class RentalOrder {
 //		this.emp = emp;
 //	}
 
-//	@Override
-//	public String toString() {
-//		return "RentalOrder [rentalId=" + rentalId + ", mem=" + mem + ", rentalDate=" + rentalDate + ", startTime="
-//				+ startTime + ", endTime=" + endTime + ", reason=" + reason + ", result=" + result + ", applyDate="
-//				+ applyDate + ", price=" + price + ", paymentType=" + paymentType + ", paymentStatus=" + paymentStatus
-//				+ ", deposit=" + deposit + ", depositRefund=" + depositRefund + ", total=" + total + "]";
-//	}
+	@Override
+	public String toString() {
+		return "RentalOrder [rentalId=" + rentalId + ", mem=" + mem + ", rentalDate=" + rentalDate + ", startTime="
+				+ startTime + ", endTime=" + endTime + ", reason=" + reason + ", result=" + result + ", applyDate="
+				+ applyDate + ", price=" + price + ", paymentType=" + paymentType + ", paymentStatus=" + paymentStatus
+				+ ", deposit=" + deposit + ", depositRefund=" + depositRefund + ", total=" + total + "]";
+	}
 
 	
 

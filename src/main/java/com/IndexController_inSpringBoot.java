@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mem.model.Mem;
 import com.mem.model.MemService;
+import com.rental.model.RentalOrder;
+import com.rental.model.RentalOrderService;
 
 import java.util.*;
+
+import javax.servlet.http.HttpSession;
 
 
 
@@ -24,46 +28,18 @@ public class IndexController_inSpringBoot {
 	@Autowired
 	MemService memSvc;
 	
+	@Autowired
+	RentalOrderService rentalOrderSvc;
 	
 	
-//    // inject(注入資料) via application.properties
-//    @Value("${welcome.message}")
-//    private String message;
-//	
-//    private List<String> myList = Arrays.asList("Spring Boot Quickstart 官網 : https://start.spring.io", "IDE 開發工具", "直接使用(匯入)官方的 Maven Spring-Boot-demo Project + pom.xml", "直接使用官方現成的 @SpringBootApplication + SpringBootServletInitializer 組態檔", "依賴注入(DI) HikariDataSource (官方建議的連線池)", "Thymeleaf", "Java WebApp (<font color=red>快速完成 Spring Boot Web MVC</font>)");
-//    @GetMapping("/")
-//    public String index(Model model) {
-//    	model.addAttribute("message", message);
-//        model.addAttribute("myList", myList);
-//        return "index"; //view
-//    }
-//    
-//    // http://......../hello?name=peter1
-//    @GetMapping("/hello")
-//    public String indexWithParam(
-//            @RequestParam(name = "name", required = false, defaultValue = "") String name, Model model) {
-//        model.addAttribute("message", name);
-//        return "index"; //view
-//    }
-//    
-  
-    //=========== 以下第63~75行是提供給 /src/main/resources/templates/back-end/emp/select_page.html 與 listAllEmp.html 要使用的資料 ===================   
-//    @GetMapping("/mem/select")
-//	public String select_page(Model model) {
-//		return "back_end/mem/select";
-//	}
-//    
-//    @GetMapping("/mem/listAllMem")
-//	public String listAllMem(Model model) {
-//		return "back_end/mem/listAllMem";
-//	}
-//    
-//    @ModelAttribute("AllMemListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第85行用
-//	protected List<Mem> referenceListData(Model model) {
-//		
-//    	List<Mem> list = memSvc.getAllMem();
-//		return list;
-//	}
+	
+	
+	@GetMapping("/mem/memIndexF")
+	public String memIndexF( Model model, HttpSession session) {
+		Mem mem = (Mem)session.getAttribute("loginSuccess");
+		model.addAttribute("mem", mem);
+		return "/front_end/mem/mem_Index";
+	}
     
 
 

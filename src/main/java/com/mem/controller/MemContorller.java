@@ -247,6 +247,14 @@ public class MemContorller {
 	
 
 	
+//	@GetMapping("memIndexF")
+//	public String memIndexF( Model model, HttpSession session) {
+//		Mem mem = (Mem)session.getAttribute("loginSuccess");
+//		model.addAttribute("mem", mem);
+//		return "/front_end/mem/mem_Index";
+//	}
+//	
+	
 	
 }
 

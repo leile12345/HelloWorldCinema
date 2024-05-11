@@ -3,8 +3,11 @@ package com.rental.controller;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,9 +87,36 @@ public class RentalOrderController {
 		} else {
 			model.addAttribute("listAllRentalOrder", rentalOrderForR);
 			return "back_end/rental/listAllRentalOrder";
-		}
-    	
-    	
+		}	
     }
     
-}
+    
+    
+    
+    
+ //===========F==============================   
+    @GetMapping("RentalOrder_For_M")
+    public String getRentalOrderByMem( Model model, HttpSession session) {
+    	Mem mem = (Mem)session.getAttribute("loginSuccess");
+    	Set<RentalOrder> rentalOrders = mem.getRentalOrder();
+    	List<RentalOrder> rentalOrderForM = new ArrayList<>(rentalOrders);
+  
+    	
+    	if (rentalOrderForM.isEmpty()) {
+			model.addAttribute("errorMsgs", "查無相關資料");
+	    	
+	    	List<RentalOrder> list = rentalOrderSvc.getAllRentalOrder();
+	    	model.asMap().remove("AllRentalOrderListData");
+			return "front_end/rental/listAllRentalOrderM";
+		} else {
+			model.addAttribute("listAllRentalOrder", rentalOrderForM);
+			return "front_end/rental/listAllRentalOrderM";
+		}	
+    }
+    
+    
+}  
+    
+    
+    
+
