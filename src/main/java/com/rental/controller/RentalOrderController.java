@@ -3,13 +3,17 @@ package com.rental.controller;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,6 +67,7 @@ public class RentalOrderController {
 	public String listAllRentalOrder(Model model) {
 		return "back_end/rental/listAllRentalOrder";
 	}
+    
     @ModelAttribute("AllRentalOrderListData")  
 	protected List<RentalOrder> referenceListData(Model model) {
 		
@@ -80,13 +85,83 @@ public class RentalOrderController {
     	
     	if (rentalOrderForR.isEmpty()) {
 			model.addAttribute("errorMsgs", "查無相關資料");
-			return "back_end/rental/select";
+			return "back_end/rental/selectRentalOrder";
 		} else {
 			model.addAttribute("listAllRentalOrder", rentalOrderForR);
 			return "back_end/rental/listAllRentalOrder";
-		}
-    	
-    	
+		}	
     }
     
-}
+    
+    @PostMapping("getOne_For_Update")
+	public String getOne_For_Update(@RequestParam("rentalId") Integer rentalId, Model model) {
+		RentalOrder rentalOrder = rentalOrderSvc.getRentalOrderById(rentalId);
+		model.addAttribute("rentalOrder", rentalOrder);
+		return "back_end/rental/update_rental";
+	}
+
+	@PostMapping("update")
+	public String update(@Valid RentalOrder rentalOrder, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("errorMsgs", result.getAllErrors());
+			return "back_end/rental/update_rental";
+		}
+
+
+
+		rentalOrderSvc.updateRentalOrder(rentalOrder);;
+
+		model.addAttribute("successMsgs", "- (修改成功)");
+		model.addAttribute("rentalOrder", rentalOrder);
+		return "back_end/rental/listOneRentalOrder";
+	}
+    
+    
+    
+ //===========F==============================   
+    @GetMapping("RentalOrder_For_M")
+    public String getRentalOrderByMem( Model model, HttpSession session) {
+    	Mem mem = (Mem)session.getAttribute("loginSuccess");
+    	Set<RentalOrder> rentalOrders = mem.getRentalOrder();
+    	List<RentalOrder> rentalOrderForM = new ArrayList<>(rentalOrders);
+  
+    	
+    	if (rentalOrderForM.isEmpty()) {
+			model.addAttribute("errorMsgs", "查無相關資料");
+	    	
+	    	List<RentalOrder> list = rentalOrderSvc.getAllRentalOrder();
+	    	model.asMap().remove("AllRentalOrderListData");
+			return "front_end/rental/listAllRentalOrderM";
+		} else {
+			model.addAttribute("listAllRentalOrder", rentalOrderForM);
+			return "front_end/rental/listAllRentalOrderM";
+		}	
+    }
+    
+    
+    @GetMapping("addRentalOrder")
+	public String addRentalOrder(ModelMap model) {
+    	RentalOrder rentalOrder = new RentalOrder();
+		model.addAttribute("rentalOrder", rentalOrder);
+		return "front_end/rental/addRentalOrder";
+	}
+
+	@PostMapping("insert")
+	public String insert(@Valid RentalOrder rentalOrder, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("rentalOrder", rentalOrder);
+			model.addAttribute("errorMsgs", result.getAllErrors());
+			return "back_end/mem/addMem";
+		}
+
+		rentalOrderSvc.addRentalOrder(rentalOrder);
+		model.addAttribute("rentalOrder", rentalOrder);
+		model.addAttribute("successMsgs", "- (新增成功)");
+		return "back_end/mem/listOneMem";
+	}
+    
+}  
+    
+    
+    
+

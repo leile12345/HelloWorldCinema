@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -85,7 +86,7 @@ public class Mem {
 //	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
 //	private Set<Booking> booking;
 //	
-	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<RentalOrder> rentalOrder;
 //	
 //	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
@@ -94,15 +95,15 @@ public class Mem {
 //	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
 //	private Set<Message> message;
 //	
-////	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
-////	private Set<MovieFav> movieFav;
+//	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
+//	private Set<MovieFav> movieFav;
 //	
 //	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
 //	private Set<Review> review;
 //	
 //	@OneToMany(mappedBy ="mem",cascade=CascadeType.ALL)
 //	private Set<Report> report;
-//	
+	
 	public Mem() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -265,7 +266,7 @@ public class Mem {
 //	public void setMessage(Set<Message> message) {
 //		this.message = message;
 //	}
-
+//
 //	public Set<MovieFav> getMovieFav() {
 //		return movieFav;
 //	}
@@ -289,7 +290,7 @@ public class Mem {
 //	public void setReport(Set<Report> report) {
 //		this.report = report;
 //	}
-
+//
 //	@Override
 //	public String toString() {
 //		return "Mem [memId=" + memId + ", memAcount=" + memAcount + ", memPassword=" + memPassword + ", memName="
@@ -298,7 +299,7 @@ public class Mem {
 //				+ booking + ", rentalOrder=" + rentalOrder + ", merchOrder=" + merchOrder + ", message=" + message
 //				+ ", review=" + review + ", report=" + report + "]";
 //	}
-
+//
 
 	
 

@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mem.model.Mem;
 import com.rental.model.RentalOrder;
 
 import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_RentalOrder3;
@@ -46,10 +47,12 @@ public class RentalOrderService {
 
     
     public List<RentalOrder> getAllRentalOrder(Map<String, String[]> map){
-    	return HibernateUtil_CompositeQuery_RentalOrder3.getAllC(map,sessionFactory.openSession());
+    	return HibernateUtil_CompositeQuery_RentalOrder3.getAllC(map, sessionFactory.openSession());
     }
     
     public List<RentalOrder> getRentalOrderByResult(String result){
     	return repository.findRentalOrderByResult(result);
     } 
+    
+
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,8 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 import com.mem.model.Mem;
+import com.screen.Screen;
 
 @Entity
 @Table(name = "rental_order")
@@ -24,51 +27,65 @@ public class RentalOrder {
 	@Column(name = "rental_id")
 	private Integer rentalId;
 
-	@ManyToOne
+	@NotEmpty
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "mem_id", referencedColumnName = "mem_id")
 	private Mem mem;
 
-//	@ManyToOne
-//	@JoinColumn(name = "screen_id" , referencedColumnName = "screen_id")
-//	private Screen screen;
+	@NotEmpty(message="影廳編號: 請勿空白")
+	@ManyToOne
+	@JoinColumn(name = "screen_id" , referencedColumnName = "screen_id")
+	private Screen screen;
 
+	@NotEmpty(message="租借日期: 請勿空白")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "rental_date")
 	private Date rentalDate;
 
+	@NotEmpty(message="預計開始時間: 請勿空白")
 	@Temporal(TemporalType.TIME)
 	@Column(name = "start_time")
 	private Date startTime;
 
+	@NotEmpty(message="預計結束時間: 請勿空白")
 	@Temporal(TemporalType.TIME)
 	@Column(name = "end_time")
 	private Date endTime;
 
+	@NotEmpty(message="申請理由: 請勿空白")
 	@Column(name = "reason")
 	private String reason;
 
+	@NotEmpty
 	@Column(name = "result")
 	private String result;
 
+	@NotEmpty
 	@Temporal(TemporalType.DATE)
 	@Column(name = "apply_date")
 	private Date applyDate;
 
+	@NotEmpty
 	@Column(name = "price")
 	private Integer price;
 
+	@NotEmpty(message="付款方式: 請勿空白")
 	@Column(name = "payment_type")
 	private String paymentType;
 
+	@NotEmpty
 	@Column(name = "payment_status")
 	private String paymentStatus;
 
+	@NotEmpty
 	@Column(name = "deposit")
 	private Integer deposit;
 
+	@NotEmpty
 	@Column(name = "deposit_refund")
 	private String depositRefund;
 
+	@NotEmpty
 	@Column(name = "total")
 	private Integer total;
 
@@ -119,13 +136,13 @@ public class RentalOrder {
 		this.mem = mem;
 	}
 
-//	public Screen getScreen() {
-//		return screen;
-//	}
-//
-//	public void setScreen(Screen screen) {
-//		this.screen = screen;
-//	}
+	public Screen getScreen() {
+		return screen;
+	}
+
+	public void setScreen(Screen screen) {
+		this.screen = screen;
+	}
 
 	public Date getRentalDate() {
 		return rentalDate;
@@ -231,13 +248,13 @@ public class RentalOrder {
 //		this.emp = emp;
 //	}
 
-//	@Override
-//	public String toString() {
-//		return "RentalOrder [rentalId=" + rentalId + ", mem=" + mem + ", rentalDate=" + rentalDate + ", startTime="
-//				+ startTime + ", endTime=" + endTime + ", reason=" + reason + ", result=" + result + ", applyDate="
-//				+ applyDate + ", price=" + price + ", paymentType=" + paymentType + ", paymentStatus=" + paymentStatus
-//				+ ", deposit=" + deposit + ", depositRefund=" + depositRefund + ", total=" + total + "]";
-//	}
+	@Override
+	public String toString() {
+		return "RentalOrder [rentalId=" + rentalId + ", mem=" + mem + ", rentalDate=" + rentalDate + ", startTime="
+				+ startTime + ", endTime=" + endTime + ", reason=" + reason + ", result=" + result + ", applyDate="
+				+ applyDate + ", price=" + price + ", paymentType=" + paymentType + ", paymentStatus=" + paymentStatus
+				+ ", deposit=" + deposit + ", depositRefund=" + depositRefund + ", total=" + total + "]";
+	}
 
 	
 
