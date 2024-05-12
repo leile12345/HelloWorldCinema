@@ -47,7 +47,7 @@ public class RentalOrderService {
 
     
     public List<RentalOrder> getAllRentalOrder(Map<String, String[]> map){
-    	return HibernateUtil_CompositeQuery_RentalOrder3.getAllC(map,sessionFactory.openSession());
+    	return HibernateUtil_CompositeQuery_RentalOrder3.getAllC(map, sessionFactory.openSession());
     }
     
     public List<RentalOrder> getRentalOrderByResult(String result){

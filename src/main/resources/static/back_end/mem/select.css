@@ -15,25 +15,27 @@ main {
     left: 320px;
     width: 50vw;
   }
-
-
-a {
-    color: blue; 
+  
+  
+  
+  table a {
+    color: rgba(175, 154, 244, 0.991); 
     text-decoration: none; 
-}
-
-a:hover {
+    margin-right: 30px;
+  }
+  
+  a:hover {
     text-decoration: underline; 
-}
-div.row{
+  }
+  
+  div.row{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-
-}
-
-.submit{
+  
+  }
+  .submit{
     background-color: #fff;
     height: 40px;
     font-size: 20px;
@@ -41,10 +43,10 @@ div.row{
     outline: none;
     border-radius: 6px;
     cursor: pointer;
-}
-.submit:hover{ 
-    outline: thick double #ffffff;  
-}
+  }
+  .submit:hover{ 
+    outline: thick double #ffffff;
+  }
 .errorMsgs{
     color: #ff0000;
 }
