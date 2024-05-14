@@ -26,7 +26,7 @@ import com.mem.model.MemService;
 
 @Controller
 @RequestMapping("/mem")
-public class MemContorller {
+public class MemController {
 
 	@Autowired
 	MemService memSvc;
@@ -247,13 +247,13 @@ public class MemContorller {
 	
 
 	
-//	@GetMapping("memIndexF")
-//	public String memIndexF( Model model, HttpSession session) {
-//		Mem mem = (Mem)session.getAttribute("loginSuccess");
-//		model.addAttribute("mem", mem);
-//		return "/front_end/mem/mem_Index";
-//	}
-//	
+	@GetMapping("memIndexF")
+	public String memIndexF( Model model, HttpSession session) {
+		Mem mem = (Mem)session.getAttribute("loginSuccess");
+		model.addAttribute("mem", mem);
+		return "/front_end/mem/mem_Index";
+	}
+	
 	
 	
 }
@@ -262,7 +262,7 @@ public class MemContorller {
 
 //=========================
 @RestController
-class MemController{
+class MemControllerR{
 	@Autowired
 	MemService memSvc;
 	

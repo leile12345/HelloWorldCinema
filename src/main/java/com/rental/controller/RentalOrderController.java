@@ -1,13 +1,14 @@
 package com.rental.controller;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.mem.model.Mem;
 import com.mem.model.MemService;
-import com.rental.model.*;
+import com.rental.model.RentalOrder;
+import com.rental.model.RentalOrderService;
 
 
 @Controller
@@ -34,6 +37,8 @@ public class RentalOrderController {
 	
 	@Autowired
 	MemService memSvc;
+	
+
 	
 	
     @GetMapping("/select")
@@ -101,13 +106,12 @@ public class RentalOrderController {
 	}
 
 	@PostMapping("update")
-	public String update(@Valid RentalOrder rentalOrder, BindingResult result, Model model) {
+	public String update( RentalOrder rentalOrder, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("errorMsgs", result.getAllErrors());
 			return "back_end/rental/update_rental";
 		}
-
-
+		
 
 		rentalOrderSvc.updateRentalOrder(rentalOrder);;
 
@@ -161,6 +165,43 @@ public class RentalOrderController {
 	}
     
 }  
+
+
+@RestController
+class RentalOrderControllerR{
+	
+	@Autowired
+	RentalOrderService rentalOrderSvc;
+	
+	
+	@GetMapping("/getPriceAndDeposit")
+    public Map<String, Integer> getPriceAndDeposit(@RequestParam String screenId) {
+Map<String, Integer> priceAndDeposit = new HashMap<>();
+        
+
+
+        if (screenId.equals("A廳")) {
+            priceAndDeposit.put("price", 30000);
+            priceAndDeposit.put("deposit", 30000);
+            priceAndDeposit.put("total", 60000);
+        } else if (screenId.equals("B廳")) {
+            priceAndDeposit.put("price", 20000);
+            priceAndDeposit.put("deposit", 20000);
+            priceAndDeposit.put("total", 40000);
+        } else if (screenId.equals("C廳")) {
+            priceAndDeposit.put("price", 32000);
+            priceAndDeposit.put("deposit", 32000);
+            priceAndDeposit.put("total", 64000);
+        } else if (screenId.equals("D廳")) {
+            priceAndDeposit.put("price", 45000);
+            priceAndDeposit.put("deposit", 45000);
+            priceAndDeposit.put("total", 90000);
+        }
+        
+        return priceAndDeposit;
+      
+    }
+}
     
     
     

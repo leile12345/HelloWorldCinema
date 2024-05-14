@@ -46,10 +46,17 @@
                         <td>會員編號：<font color=red><b>*</b></font></td>
                         <td><input type="text" name="mem.memId" th:field="*{mem.memId}" size="45" readonly/></td>
                     </tr>
-                    <!-- <tr>
+                    <tr>
                         <td>影廳編號：</td>
-                        <td><input type="text" name="screen.screenId" th:field="*{screen.screenId}" size="45"/></td>
-                    </tr> -->
+                        <td>
+                            <select size="1" name="screen.screenId" th:field="*{screen.screenId}" id="screenId">
+                                <option value="A廳" th:selected="${result == 'A廳'}" >A廳</option>
+                                <option value="B廳" th:selected="${result == 'B廳'}" >B廳</option>
+                                <option value="C廳" th:selected="${result == 'C廳'}" >C廳</option>
+                                <option value="D廳" th:selected="${result == 'D廳'}" >D廳</option>
+                            </select>
+                        </td>
+                    </tr>
                     <tr>
                         <td>租借日期：</td>
                         <td><input type="date" name="rentalDate" th:field="*{rentalDate}" size="45"/></td>
@@ -83,15 +90,15 @@
                     </tr>
                     <tr>
                         <td>影廳價格：<font color=red><b>*</b></font></td>
-                        <td><input type="text" name="price" th:field="*{price}" size="45"/></td>
+                        <td><input type="text" name="price" th:field="*{price}" size="45" id="price" readonly/></td>
                     </tr>
                     <tr>
                         <td>押金：<font color=red><b>*</b></font></td>
-                        <td><input type="text" name="deposit" th:field="*{deposit}" size="45"/></td>
+                        <td><input type="text" name="deposit" th:field="*{deposit}" size="45" id="deposit" readonly/></td>
                     </tr>
                     <tr>
                         <td>合計：<font color=red><b>*</b></font></td>
-                        <td><input type="text" name="total" th:field="*{total}" size="45"/></td>
+                        <td><input type="text" name="total" th:field="*{total}" size="45" id="total" readonly/></td>
                     </tr>
                     <tr>
                         <td>付款方式：</td>
@@ -117,6 +124,9 @@
 		</main>
 
         <script th:src="@{/back_end/js/management.js}"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script th:src="@{/back_end/rental/update_rental.js}" src="../../../static/back_end/rental/update_rental.js"></script>
 	</body>
 
 

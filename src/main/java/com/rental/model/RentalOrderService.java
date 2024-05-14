@@ -2,6 +2,7 @@ package com.rental.model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.hibernate.SessionFactory;
@@ -54,5 +55,6 @@ public class RentalOrderService {
     	return repository.findRentalOrderByResult(result);
     } 
     
+
 
 }

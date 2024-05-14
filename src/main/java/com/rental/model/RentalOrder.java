@@ -1,5 +1,6 @@
 package com.rental.model;
 
+import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,6 +15,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.mem.model.Mem;
 import com.screen.Screen;
@@ -27,27 +31,30 @@ public class RentalOrder {
 	@Column(name = "rental_id")
 	private Integer rentalId;
 
-	@NotEmpty
+	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "mem_id", referencedColumnName = "mem_id")
 	private Mem mem;
 
-	@NotEmpty(message="影廳編號: 請勿空白")
+	@NotNull(message="影廳編號: 請勿空白")
 	@ManyToOne
 	@JoinColumn(name = "screen_id" , referencedColumnName = "screen_id")
 	private Screen screen;
 
-	@NotEmpty(message="租借日期: 請勿空白")
+	@NotNull(message="租借日期: 請勿空白")
+	@DateTimeFormat(pattern="yyyy-MM-dd") 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "rental_date")
 	private Date rentalDate;
 
-	@NotEmpty(message="預計開始時間: 請勿空白")
+	@NotNull(message="預計開始時間: 請勿空白")
+	@DateTimeFormat(pattern="HH:mm:ss") 
 	@Temporal(TemporalType.TIME)
 	@Column(name = "start_time")
 	private Date startTime;
 
-	@NotEmpty(message="預計結束時間: 請勿空白")
+	@NotNull(message="預計結束時間: 請勿空白")
+	@DateTimeFormat(pattern="HH:mm:ss") 
 	@Temporal(TemporalType.TIME)
 	@Column(name = "end_time")
 	private Date endTime;
@@ -60,12 +67,13 @@ public class RentalOrder {
 	@Column(name = "result")
 	private String result;
 
-	@NotEmpty
+	@NotNull
+	@DateTimeFormat(pattern="yyyy-MM-dd") 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "apply_date")
 	private Date applyDate;
 
-	@NotEmpty
+//	@NotNull
 	@Column(name = "price")
 	private Integer price;
 
@@ -77,7 +85,7 @@ public class RentalOrder {
 	@Column(name = "payment_status")
 	private String paymentStatus;
 
-	@NotEmpty
+//	@NotNull
 	@Column(name = "deposit")
 	private Integer deposit;
 
@@ -85,7 +93,7 @@ public class RentalOrder {
 	@Column(name = "deposit_refund")
 	private String depositRefund;
 
-	@NotEmpty
+	@NotNull
 	@Column(name = "total")
 	private Integer total;
 
@@ -160,7 +168,7 @@ public class RentalOrder {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public Date  getEndTime() {
 		return endTime;
 	}
 
