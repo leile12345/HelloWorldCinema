@@ -1,6 +1,9 @@
 package com.rental.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,10 +129,7 @@ public class RentalOrderController {
     @GetMapping("RentalOrder_For_M")
     public String getRentalOrderByMem( Model model, HttpSession session) {
     	Mem mem = (Mem)session.getAttribute("loginSuccess");
-    	System.out.println(mem);
     	List<RentalOrder> rentalOrders = rentalOrderSvc.getRentalOrderByMemId(mem.getMemId());
-    	System.out.println(rentalOrders);
-  
     	
     	if (rentalOrders.isEmpty()) {
 			model.addAttribute("errorMsgs", "查無相關資料");
@@ -143,9 +143,11 @@ public class RentalOrderController {
     
     
     @GetMapping("addRentalOrder")
-	public String addRentalOrder(ModelMap model) {
+	public String addRentalOrder(ModelMap model, HttpSession session) {
     	RentalOrder rentalOrder = new RentalOrder();
-		model.addAttribute("rentalOrder", rentalOrder);
+    	Mem mem = (Mem)session.getAttribute("loginSuccess");
+    	rentalOrder.setMem(mem);
+    	model.addAttribute("rentalOrder", rentalOrder);
 		return "front_end/rental/addRentalOrder";
 	}
 
@@ -154,18 +156,44 @@ public class RentalOrderController {
 		if (result.hasErrors()) {
 			model.addAttribute("rentalOrder", rentalOrder);
 			model.addAttribute("errorMsgs", result.getAllErrors());
-			return "back_end/mem/addMem";
+			return "front_end/rental/addRentalOrder";
 		}
 
 		rentalOrderSvc.addRentalOrder(rentalOrder);
 		model.addAttribute("rentalOrder", rentalOrder);
-		model.addAttribute("successMsgs", "- (新增成功)");
-		return "back_end/mem/listOneMem";
+		model.addAttribute("successMsgs", "- (填寫成功)");
+		return "front_end/rental/listAllRentalOrderM";
 	}
     
-}  
+  
+
+	//===============================================================
+	@GetMapping("/listAllRentalOrderF")
+	public String listAllRentalOrderF(HttpServletRequest req, Model model) {
+	    Map<String, String[]> map = new HashMap<>(req.getParameterMap());
+		
+		LocalDate today = LocalDate.now();
+		String todayString = today.toString();
+		map.put("startdate", new String[] {todayString});
+		List<RentalOrder> list = rentalOrderSvc.getAllRentalOrder(map);
+		
+		// 按照日期排序
+		Collections.sort(list, Comparator.comparing(RentalOrder::getRentalDate));
+		
+	    if (list.isEmpty()) {
+	        model.addAttribute("errorMsgs", "查無相關資料");
+	        return "front_end/rental/listAllRentalOrderF";
+	    } else {
+	        model.addAttribute("AllRentalOrderListData", list);
+	        return "front_end/rental/listAllRentalOrderF";
+	    }
+
+	}
+
+}
 
 
+//=========================================================================================================
 @RestController
 class RentalOrderControllerR{
 	
