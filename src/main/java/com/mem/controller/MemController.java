@@ -1,10 +1,21 @@
 package com.mem.controller;
 
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -30,6 +41,8 @@ public class MemController {
 
 	@Autowired
 	MemService memSvc;
+	
+
 
 	//
 	@GetMapping("addMem")
@@ -254,6 +267,13 @@ public class MemController {
 		return "/front_end/mem/mem_Index";
 	}
 	
+	//=====================================================
+
+ 
+	
+	
+	
+	
 	
 	
 }
@@ -278,4 +298,87 @@ class MemControllerR{
 		response.put("exists", (memSvc.getMemByEmail(memEmail)!=null));
 		return response;
 	}
+	
+	
+//	 @PostMapping("/sendVCode")
+//	    public String sendVerificationCode(@RequestParam("memEmail") String memEmail) {
+//	        String randomCode = RandomCode();
+//	        String subject = "會員註冊驗證";
+//	        String text = "您的驗證碼是：" + randomCode;
+//
+//	        if (sendEmail(memEmail, subject, text)) {
+//	        	 // 將驗證碼存放到 Redis 中，有效期設置為 5 分鐘
+//	            redisTemplate.opsForValue().set("verification_code:" + memEmail, randomCode, 5, TimeUnit.MINUTES);
+//	            return "Verification code sent successfully!";
+//	        } else {
+//	            return "Failed to send verification code!";
+//	        }
+//	    }
+
+	 
+	 @PostMapping("/forgotPass")
+	    public String forgotPassword(@RequestParam("memEmail") String memEmail) {
+	        String newPassword = RandomCode(); 
+	        String subject = "重置密碼";
+	        String text = "您的新密碼是：" + newPassword;
+
+	        if (sendEmail(memEmail, subject, text)) {
+	            Mem mem = memSvc.getMemByEmail(memEmail);
+	            mem.setMemPassword(newPassword);
+	            memSvc.updateMem(mem);
+	            return "New password sent successfully!";
+	        } else {
+	            return "Failed to send new password!";
+	        }
+	    }
+	 
+	    private String RandomCode() {
+
+	    	StringBuilder sb = new StringBuilder();
+	        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	        for (int i = 0; i < 6; i++) {
+	            int index = (int) (Math.random() * characters.length());
+	            sb.append(characters.charAt(index));
+	        }
+	        return sb.toString();
+	    }
+
+	    private boolean sendEmail(String to, String subject, String text) {
+	        String from = "vvv709171@gmail.com"; // 請替換成您的郵箱
+	        String password = "agprzxkfjtyhlmze"; // 請替換成您的郵箱密碼
+
+	        Properties properties = new Properties();
+	        properties.put("mail.smtp.host", "smtp.gmail.com"); // 請替換成您的 SMTP 伺服器地址
+	        properties.put("mail.smtp.port", "465"); // 請替換成 SMTP 伺服器的端口
+	        properties.put("mail.smtp.auth", "true");
+	        properties.put("mail.smtp.socketFactory.port", "465");
+
+	        Session session = Session.getInstance(properties, new Authenticator() {
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	                return new PasswordAuthentication(from, password);
+	            }
+	        });
+
+	        try {
+	            Message message = new MimeMessage(session);
+	            message.setFrom(new InternetAddress(from));
+	            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+	            message.setSubject(subject);
+	            message.setText(text);
+
+	            Transport.send(message);
+	            return true;
+	        } catch (MessagingException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+	
+	
+	
+	
  }
+
+
+
+

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mem.model.Mem;
+import com.mem.model.MemRepository;
 import com.rental.model.RentalOrder;
 
 import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_RentalOrder3;
@@ -19,6 +20,9 @@ public class RentalOrderService {
 	
 	@Autowired
 	RentalOrderRepository repository;
+	
+	@Autowired
+	MemRepository memRepository;
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -55,6 +59,10 @@ public class RentalOrderService {
     	return repository.findRentalOrderByResult(result);
     } 
     
+    public List<RentalOrder> getRentalOrderByMemId(Integer memId){
+    	Mem mem = memRepository.findByMemId(memId);
+    	return repository.findRentalOrderByMem(mem);
+    } 
 
 
 }

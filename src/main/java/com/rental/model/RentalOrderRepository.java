@@ -12,6 +12,7 @@ import com.mem.model.Mem;
 @Repository
 public interface RentalOrderRepository extends JpaRepository<RentalOrder, Integer> {
 	List<RentalOrder> findRentalOrderByResult(String result);
+	List<RentalOrder> findRentalOrderByMem(Mem mem);
 
   
 }

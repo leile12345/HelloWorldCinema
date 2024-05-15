@@ -126,18 +126,17 @@ public class RentalOrderController {
     @GetMapping("RentalOrder_For_M")
     public String getRentalOrderByMem( Model model, HttpSession session) {
     	Mem mem = (Mem)session.getAttribute("loginSuccess");
-    	Set<RentalOrder> rentalOrders = mem.getRentalOrder();
-    	List<RentalOrder> rentalOrderForM = new ArrayList<>(rentalOrders);
+    	System.out.println(mem);
+    	List<RentalOrder> rentalOrders = rentalOrderSvc.getRentalOrderByMemId(mem.getMemId());
+    	System.out.println(rentalOrders);
   
     	
-    	if (rentalOrderForM.isEmpty()) {
+    	if (rentalOrders.isEmpty()) {
 			model.addAttribute("errorMsgs", "查無相關資料");
-	    	
-	    	List<RentalOrder> list = rentalOrderSvc.getAllRentalOrder();
 	    	model.asMap().remove("AllRentalOrderListData");
 			return "front_end/rental/listAllRentalOrderM";
 		} else {
-			model.addAttribute("listAllRentalOrder", rentalOrderForM);
+			model.addAttribute("AllRentalOrderListData", rentalOrders);
 			return "front_end/rental/listAllRentalOrderM";
 		}	
     }

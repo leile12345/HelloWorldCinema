@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>世界影城 HelloWorld Cinema</title>
+    <link rel="icon" href="./../../static/front_end/img/icon.ico" type="image/x-icon">
+
+    <meta name="description" content="世界影城、提供電影介紹、場次時刻表、購票資訊、會員網路訂票服務、電影周邊商品販售、影廳場地租借服務">
+    <meta name="keywords" content="世界、電影、世界影城、HelloWorld Cinema" />
+    <meta name="robots" content="Index,follow">
+    <meta property="og:title" content="世界影城" />
+    <meta property="og:image" content=".img/bk.jpg" />
+    <meta property="og:site_name" content="世界影城網站" />
+    <meta property="og:url" content="https://www.ambassador.com.tw" />
+    <meta property="og:description" content="世界影城、提供電影介紹、場次時刻表、購票資訊、會員網路訂票服務、電影周邊商品販售、影廳場地租借服務" />
+    <!-- RWD -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <!-- 底部footer -->
+    <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css}">
+   <!-- 主要css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/front_end/css/index.css}" href="../../../static/front_end/css/index.css" />
+
+    <link rel="stylesheet" th:href="@{/front_end/mem/mem_login.css}" href="../../../static/front_end/mem/mem_login.css">
+</head>
+
+	<body>
+        <header th:replace="~{/front_end/index :: header}"></header>
+        <br>
+
+		<main>
+            <h1>場地租借</h1>
+			<h3>租借訂單修改</h3>
+			<h4><a th:href="@{/rental/select}">回首頁</a></h4><br><br>
+
+
+            
+            <div class="errorMsgs" th:if="${errorMsgs}">
+                <ul>
+                    <li th:each="errors : ${errorMsgs}" th:text="${errors.defaultMessage}"></li>
+                </ul>
+            </div>
+            <div class="errorMsgs" th:if="${errorMsg}">
+                <ul>
+                    <li th:each="error : ${errorMsg}" th:text="${error}"></li>
+                </ul>
+            </div>
+
+
+			<form th:action="@{update}" method="post" th:object="${rentalOrder}">
+                <table>
+                    <tr>
+                        <td>表單編號：<font color=red><b>*</b></font></td>
+                        <td><input type="text" th:field="*{rentalId}" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>會員編號：<font color=red><b>*</b></font></td>
+                        <td><input type="text" name="mem.memId" th:field="*{mem.memId}" size="45" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>影廳編號：</td>
+                        <td>
+                            <select size="1" name="screen.screenId" th:field="*{screen.screenId}" id="screenId">
+                                <option value="A廳" th:selected="${result == 'A廳'}" >A廳</option>
+                                <option value="B廳" th:selected="${result == 'B廳'}" >B廳</option>
+                                <option value="C廳" th:selected="${result == 'C廳'}" >C廳</option>
+                                <option value="D廳" th:selected="${result == 'D廳'}" >D廳</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>租借日期：</td>
+                        <td><input type="date" name="rentalDate" th:field="*{rentalDate}" size="45"/></td>
+                    </tr>
+                    <tr>
+                        <td>預計開始時間：</td>
+                        <td><input type="time" name="startTime" th:field="*{startTime}" size="45"/></td>
+                    </tr>
+                    <tr>
+                        <td>預計結束時間：</td>
+                        <td><input type="time" name="endTime" th:field="*{endTime}" size="45"/></td>
+                    </tr>
+                    <tr>
+                        <td>申請理由：</td>
+                        <td><input type="text" name="reason" th:field="*{reason}" size="45"/></td>
+                    </tr>
+                    <tr>
+                        <td>審核狀態：</td>
+                        <td>
+                            <select size="1" name="result" th:field="*{result}">
+                                <option value="審核中" th:selected="${result == '審核中'}" >審核中</option>
+                                <option value="通過" th:selected="${result == '通過'}" >通過</option>
+                                <option value="未通過" th:selected="${result == '未通過'}" >未通過</option>
+                                <option value="取消訂單" th:selected="${result == '取消訂單'}" >取消訂單</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>申請日期：<font color=red><b>*</b></font></td>
+                        <td><input type="date" name="applyDate" th:field="*{applyDate}" size="45" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>影廳價格：<font color=red><b>*</b></font></td>
+                        <td><input type="text" name="price" th:field="*{price}" size="45" id="price" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>押金：<font color=red><b>*</b></font></td>
+                        <td><input type="text" name="deposit" th:field="*{deposit}" size="45" id="deposit" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>合計：<font color=red><b>*</b></font></td>
+                        <td><input type="text" name="total" th:field="*{total}" size="45" id="total" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td>付款方式：</td>
+                        <td><input type="text" name="paymentType" th:field="*{paymentType}" size="45"/></td>
+                    </tr>
+                    <tr>
+                        <td>付款狀態：</td>
+                        <td><input type="text" name="paymentStatus" th:field="*{paymentStatus}" size="45"/></td>
+                    </tr>
+                    <tr>
+                        <td>押金歸還：</td>
+                        <td><input type="text" name="depositRefund" th:field="*{depositRefund}" size="45"/></td>
+                    </tr>
+                    <!-- <tr>
+                        <td>員工編號：</td>
+                        <td><input type="text" name="empId" th:field="*{empId}" size="45" readonly/></td>
+                    </tr> -->
+                </table>
+                <br>
+                <input type="submit" value="送出修改">
+            </form>
+            
+		</main>
+
+
+        <br>
+        <footer th:replace="~{/front_end/index :: footer}"></footer>
+
+
+        <script th:src="@{/back_end/js/management.js}"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script th:src="@{/back_end/rental/update_rental.js}" src="../../../static/back_end/rental/update_rental.js"></script>
+       
+       
+       
+	</body>
+
+
+</html>
