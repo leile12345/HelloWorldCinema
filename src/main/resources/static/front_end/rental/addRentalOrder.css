@@ -57,23 +57,7 @@ form{
 input.invalid {
     background-color: #ffdddd;
   }
-button.eye{
-    position: relative;
-    float: right;
-    margin-top: -32px;
-    margin-right: 10px;
 
-    border: none;
-    cursor: pointer;
-    appearance: none;
-    background: none;
-  }
-.eye-icon{
-
-    width: 20px;
-    height: 20px;
-    vertical-align: -0.125em;
-}
 .field input.submit{
     color: #fff;
     background-color: #12528a;
@@ -102,10 +86,6 @@ button.eye{
     text-decoration: underline;
 }
 
-div.errorMsgs li{
+div.errorMsgs li, div.successMsgs li{
     color: red;
-}
-
-h4.neon2{
-    width: 64px;
 }

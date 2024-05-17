@@ -5,15 +5,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-/* .container.forms{
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #021e6d;
-    column-gap: 30px;
-} */
+
 h1{
     color: #043d6f;
 }
@@ -101,8 +93,19 @@ button.eye{
 }
 
 
-
-
 div.errorMsgs li{
     color: red;
+}
+
+.submitV { /* mem_v */
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-size: 14px;
+    cursor: pointer; 
+    text-decoration: none;
+    overflow-wrap: break-word;
+    color: #12528a; 
 }

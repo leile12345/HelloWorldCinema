@@ -31,7 +31,7 @@ public class RentalOrder {
 	@Column(name = "rental_id")
 	private Integer rentalId;
 
-	@NotNull
+	@NotNull(message="1請勿空白")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "mem_id", referencedColumnName = "mem_id")
 	private Mem mem;
@@ -63,11 +63,11 @@ public class RentalOrder {
 	@Column(name = "reason")
 	private String reason;
 
-	@NotEmpty
+	@NotEmpty(message="2請勿空白")
 	@Column(name = "result")
 	private String result;
 
-	@NotNull
+	@NotNull(message="3請勿空白")
 	@DateTimeFormat(pattern="yyyy-MM-dd") 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "apply_date")
@@ -89,11 +89,11 @@ public class RentalOrder {
 	@Column(name = "deposit")
 	private Integer deposit;
 
-	@NotEmpty
+	@NotEmpty(message="4請勿空白")
 	@Column(name = "deposit_refund")
 	private String depositRefund;
 
-	@NotNull
+	@NotNull(message="5請勿空白")
 	@Column(name = "total")
 	private Integer total;
 

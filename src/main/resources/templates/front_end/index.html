@@ -40,7 +40,7 @@
     <div th:fragment="header">
         <header class="header">
             <div id="box" class="logo">
-                <h1 class="neon"><a href="index.html"><span class="logo_el">H</span>ello<span class="logo_el">W</span>orld <span class="logo_el">C</span>inema</a></h1>
+                <h1 class="neon"><a href=" th:href=@{/front_end/index}"><span class="logo_el">H</span>ello<span class="logo_el">W</span>orld <span class="logo_el">C</span>inema</a></h1>
             </div>
             <div id="box">
                 <nav class="nav">
@@ -91,11 +91,11 @@
                                     <a th:href=@{/rental/listAllRentalOrderF}>可租借場地資訊</a>
                                 </li>
                                 <li class="nav__submenu-item">
-                                    <a href="">租借表單填寫</a>
+                                    <a th:href=@{/rental/f/addRentalOrder}>租借表單填寫</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav__menu-item">
+                        <!-- <li class="nav__menu-item">
                             <a href=""><h4 class="neon2">Log In</h4></a>
                             <ul class="nav__submenu">
                                 <li class="nav__submenu-item">
@@ -103,6 +103,21 @@
                                 </li>
     
                             </ul>
+                        </li> -->
+
+                        <li class="nav__menu-item" th:if="${session.loginSuccess != null}">
+                            <a href=""><h4 class="neon2" th:text="${#strings.substring(session.loginSuccess.memName, 0, 3)}" ></h4></a>
+                            <ul class="nav__submenu">
+                                <li class="nav__submenu-item">
+                                    <a th:href="@{/mem/memIndexF}">會員專區</a>
+                                </li>
+                                <li class="nav__submenu-item">
+                                    <a th:href="@{/mem/logout}">Log Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav__menu-item" th:unless="${session.loginSuccess != null}">
+                            <a th:href="@{/mem/login}"><h4 class="neon2" >Log In</h4></a>
                         </li>
                     </ul>
                 </nav>

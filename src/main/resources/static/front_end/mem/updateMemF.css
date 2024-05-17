@@ -102,9 +102,6 @@ button.eye{
     text-decoration: underline;
 }
 
-
-
-
 div.errorMsgs li, div.successMsgs li{
     color: red;
 }

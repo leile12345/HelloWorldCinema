@@ -49,8 +49,21 @@ tr:hover {
     background-color: #f9f9f9;
 }
 
-
 div.errorMsgs li{
     color: red;
 }
-
+button[type="submit"] {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer; 
+    text-decoration: underline;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: #007bff; 
+}
+button[type="submit"]:disabled {
+    color: #999; 
+    cursor: not-allowed; 
+}

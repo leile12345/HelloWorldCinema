@@ -59,12 +59,12 @@
                             <td th:text="${rentalOrder.rentalId}"></td>
                             <td th:text="${rentalOrder.mem.memId}"></td>
                             <td th:text="${rentalOrder.screen.screenId}"></td>
-                            <td th:text="${rentalOrder.rentalDate}"></td>
-                            <td th:text="${rentalOrder.startTime}"></td>
-                            <td th:text="${rentalOrder.endTime}"></td>
+                            <td th:text="${#dates.format(rentalOrder.rentalDate, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${#dates.format(rentalOrder.startTime, 'HH:mm:ss')}"></td>
+                            <td th:text="${#dates.format(rentalOrder.endTime, 'HH:mm:ss')}"></td>
                             <td th:text="${rentalOrder.reason}"></td>
                             <td th:text="${rentalOrder.result}"></td>
-                            <td th:text="${rentalOrder.applyDate}"></td>
+                            <td th:text="${#dates.format(rentalOrder.applyDate, 'yyyy-MM-dd')}"></td>
                             <td th:text="${rentalOrder.price}"></td>
                             <td th:text="${rentalOrder.paymentType}"></td>
                             <td th:text="${rentalOrder.paymentStatus}"></td>

@@ -181,6 +181,7 @@ function checkUniqueEmail() {
                 document.getElementById("nextBtn").disabled = true;
             } else {
                 document.getElementById("Error").innerText = "";
+                document.getElementById("memEmail1").className-= " invalid";
                 document.getElementById("nextBtn").disabled = false;
             }
         }

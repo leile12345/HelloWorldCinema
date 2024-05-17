@@ -9,8 +9,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//import com.mem.dao.MemDAO;
-//import com.mem.dao.MemDAOImpl;
+
 
 import hibernate.util.CompositeQuery.HibernateUtil_CompositeQuery_Mem3;
 
@@ -71,8 +70,6 @@ public class MemService {
     	return repository.findByMemStatus(memStatus);
     }
     
-    
-
-
+   
    
 }
