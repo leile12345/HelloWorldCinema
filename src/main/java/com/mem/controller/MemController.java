@@ -275,6 +275,7 @@ public class MemController {
 		String text = "您的驗證碼是：" + randomCode;
 
 		jedis = new Jedis("localhost", 6379);
+		jedis.select(11);
 		if (sendEmail(memEmail, subject, text)) {
 			jedis.set(memEmail, randomCode);
 			jedis.expire(memEmail, 600);
@@ -311,21 +312,26 @@ public class MemController {
 		}
 	}
 
-//	@PostMapping("/forgotPass")
-//	public String forgotPassword(@RequestParam("memEmail") String memEmail) {
-//		String newPassword = RandomCode();
-//		String subject = "重置密碼";
-//		String text = "您的新密碼是：" + newPassword;
-//
-//		if (sendEmail(memEmail, subject, text)) {
-//			Mem mem = memSvc.getMemByEmail(memEmail);
-//			mem.setMemPassword(newPassword);
-//			memSvc.updateMem(mem);
-//			return "New password sent successfully!";
-//		} else {
-//			return "Failed to send new password!";
-//		}
-//	}
+//	forgetPass
+	
+	@PostMapping("/newPass")
+	public String forgotPassword(@RequestParam("memEmail") String memEmail, Model model) {
+		String newPassword = RandomCode();
+		String subject = "重置密碼";
+		String text = "您的新密碼是：" + newPassword;
+
+		if (sendEmail(memEmail, subject, text)) {
+			Mem mem = memSvc.getMemByEmail(memEmail);
+			mem.setMemPassword(newPassword);
+			memSvc.updateMem(mem);
+			
+			model.addAttribute("memEmail", memEmail);
+			return "front_end/mem/mem_login";
+		} else {
+			model.addAttribute("errorMsgs", "新密碼寄送失敗");
+			return "Failed to send new password!";
+		}
+	}
 
 	private String RandomCode() {
 
