@@ -27,7 +27,7 @@
 </head>
 
 	<body>
-        <header th:replace="~{/front_end/index :: header}"></header>
+        <header th:replace="~{/front_end/mem/index :: header}"></header>
         <br>
 
 
@@ -57,7 +57,7 @@
                     
                     <div class="field input-field">
                         <label for="" >會員編號：</label>
-                        <input type="text" name="mem.memId" th:field="*{mem.memId}" size="45"/>
+                        <input type="text" name="mem.memId" th:field="*{mem.memId}" readonly size="45"/>
                     </div>
 
                     <div class="field input-field">
@@ -129,7 +129,7 @@
 
 
         <br>
-        <footer th:replace="~{/front_end/index :: footer}"></footer>
+        <footer th:replace="~{/front_end/mem/index :: footer}"></footer>
 
         <script th:src="@{/front_end/js/jquery-3.4.1.min.js}"></script>
         <!-- 主要js -->
