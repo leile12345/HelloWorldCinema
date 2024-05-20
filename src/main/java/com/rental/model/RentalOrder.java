@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.mem.model.Mem;
+import com.screen.Emp;
 import com.screen.Screen;
 
 @Entity
@@ -97,36 +98,36 @@ public class RentalOrder {
 	@Column(name = "total")
 	private Integer total;
 
-//	@ManyToOne
-//	@JoinColumn(name = "emp_id" , referencedColumnName = "emp_id")
-//	private Emp emp;
+	@ManyToOne
+	@JoinColumn(name = "emp_id" , referencedColumnName = "emp_id")
+	private Emp emp;
 
 	public RentalOrder() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-//	public RentalOrder(Integer rentalId, Mem mem, Screen screen, Date rentalDate, Date startTime, Date endTime,
-//			String reason, String result, Date applyDate, Integer price, String paymentType, String paymentStatus,
-//			Integer deposit, String depositRefund, Integer total, Emp emp) {
-//		super();
-//		this.rentalId = rentalId;
-//		this.mem = mem;
-//		this.screen = screen;
-//		this.rentalDate = rentalDate;
-//		this.startTime = startTime;
-//		this.endTime = endTime;
-//		this.reason = reason;
-//		this.result = result;
-//		this.applyDate = applyDate;
-//		this.price = price;
-//		this.paymentType = paymentType;
-//		this.paymentStatus = paymentStatus;
-//		this.deposit = deposit;
-//		this.depositRefund = depositRefund;
-//		this.total = total;
-//		this.emp = emp;
-//	}
+	public RentalOrder(Integer rentalId, Mem mem, Screen screen, Date rentalDate, Date startTime, Date endTime,
+			String reason, String result, Date applyDate, Integer price, String paymentType, String paymentStatus,
+			Integer deposit, String depositRefund, Integer total, Emp emp) {
+		super();
+		this.rentalId = rentalId;
+		this.mem = mem;
+		this.screen = screen;
+		this.rentalDate = rentalDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.reason = reason;
+		this.result = result;
+		this.applyDate = applyDate;
+		this.price = price;
+		this.paymentType = paymentType;
+		this.paymentStatus = paymentStatus;
+		this.deposit = deposit;
+		this.depositRefund = depositRefund;
+		this.total = total;
+		this.emp = emp;
+	}
 
 	public Integer getRentalId() {
 		return rentalId;
@@ -248,13 +249,13 @@ public class RentalOrder {
 		this.total = total;
 	}
 
-//	public Emp getEmp() {
-//		return emp;
-//	}
-//
-//	public void setEmp(Emp emp) {
-//		this.emp = emp;
-//	}
+	public Emp getEmp() {
+		return emp;
+	}
+
+	public void setEmp(Emp emp) {
+		this.emp = emp;
+	}
 
 	@Override
 	public String toString() {

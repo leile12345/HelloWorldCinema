@@ -82,8 +82,9 @@ public class RentalOrderController {
 
 	@GetMapping("get_RentalOrder_For_Review")
 	public String getRentalOrderForReview(Model model) {
-		List<RentalOrder> rentalOrderForR = new ArrayList<>();
-		rentalOrderForR.addAll(rentalOrderSvc.getRentalOrderByResult("審核中"));
+//		List<RentalOrder> rentalOrderForR = new ArrayList<>();
+//		rentalOrderForR.addAll(rentalOrderSvc.getRentalOrderByResult("審核中"));
+		List<RentalOrder> rentalOrderForR = rentalOrderSvc.getRentalOrderByResult("審核中");
 
 		List<RentalOrder> list = rentalOrderSvc.getAllRentalOrder();
 		model.addAttribute("AllRentalOrderListData", list);
@@ -92,7 +93,7 @@ public class RentalOrderController {
 			model.addAttribute("errorMsgs", "查無相關資料");
 			return "back_end/rental/selectRentalOrder";
 		} else {
-			model.addAttribute("listAllRentalOrder", rentalOrderForR);
+			model.addAttribute("AllRentalOrderListData", rentalOrderForR);
 			return "back_end/rental/listAllRentalOrder";
 		}
 	}
