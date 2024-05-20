@@ -180,8 +180,9 @@ public class MemController {
 				model.addAttribute("errorMsgs", "無使用權限，詳情請洽客服");
 				return "front_end/mem/mem_login";
 			} else {
-				model.addAttribute("errorMsgs", "帳號尚未完成驗證"); //
-				return "front_end/mem/mem_login";
+				model.addAttribute("errorMsgs", "帳號尚未完成驗證"); 
+				model.addAttribute("memEmail", mem.getMemEmail()); 
+				return "front_end/mem/mem_verification";
 			}
 		} else {
 			model.addAttribute("errorMsgs", "會員帳號或密碼錯誤");
@@ -312,10 +313,22 @@ public class MemController {
 		}
 	}
 
-//	forgetPass
+
+	@GetMapping("/forgetPass")
+	public String forgetPass(Model model) {
+		
+		return "front_end/mem/mem_forgetPass";
+	}
 	
-	@PostMapping("/newPass")
+	@PostMapping("/sendNewPass")
 	public String forgotPassword(@RequestParam("memEmail") String memEmail, Model model) {
+		
+		if(memSvc.getMemByEmail(memEmail) == null) {
+			model.addAttribute("errorMsgs", "此信箱尚未註冊");
+	        return "front_end/mem/mem_forgetPass"; 
+		}
+		
+		
 		String newPassword = RandomCode();
 		String subject = "重置密碼";
 		String text = "您的新密碼是：" + newPassword;
@@ -325,11 +338,12 @@ public class MemController {
 			mem.setMemPassword(newPassword);
 			memSvc.updateMem(mem);
 			
-			model.addAttribute("memEmail", memEmail);
+			model.addAttribute("errorMsgs", "新密碼已寄出，請登入會員");
 			return "front_end/mem/mem_login";
 		} else {
+			model.addAttribute("memEmail", memEmail);
 			model.addAttribute("errorMsgs", "新密碼寄送失敗");
-			return "Failed to send new password!";
+			return  "front_end/mem/mem_forgetPass";
 		}
 	}
 

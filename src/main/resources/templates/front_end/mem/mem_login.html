@@ -60,9 +60,9 @@
                         <button class="eye" type="button" onclick="eyeSwitch()"><img class="eye-icon" id="eye1" th:src="@{/front_end/mem/img/eye.svg}" ></button>
                     </div>
 
-                    <!-- <div class="form-link">
-                        <a href="" class="forgot-pass">忘記密碼？</a>
-                    </div> -->
+                    <div class="form-link">
+                        <a th:href="@{/mem/forgetPass}" class="forgot-pass">忘記密碼？</a>
+                    </div>
 
                     <div class="field button-field">
                         <input type="hidden" name="action" value="login">
