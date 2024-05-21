@@ -94,9 +94,15 @@ public class RentalOrderController {
 			return "back_end/rental/selectRentalOrder";
 		} else {
 			model.addAttribute("AllRentalOrderListData", rentalOrderForR);
-			return "back_end/rental/listAllRentalOrder";
+			return "back_end/rental/listAllRentalOrderR";
 		}
 	}
+//    @PostMapping("/rental/review")
+//    public String updateRental(RentalOrder rentalOrder) {
+//
+//
+//        return "redirect:/rental/page"; 
+//    }
 
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("rentalId") Integer rentalId, Model model) {
