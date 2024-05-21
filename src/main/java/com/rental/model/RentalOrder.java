@@ -98,7 +98,7 @@ public class RentalOrder {
 	@Column(name = "total")
 	private Integer total;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "emp_id" , referencedColumnName = "emp_id")
 	private Emp emp;
 

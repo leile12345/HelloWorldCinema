@@ -119,7 +119,7 @@ public class RentalOrderController {
 		}
 
 		rentalOrderSvc.updateRentalOrder(rentalOrder);
-		;
+		
 
 		model.addAttribute("successMsgs", "- (修改成功)");
 		model.addAttribute("rentalOrder", rentalOrder);

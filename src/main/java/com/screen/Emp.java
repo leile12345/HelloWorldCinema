@@ -2,10 +2,13 @@ package com.screen;
 
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 
+import com.rental.model.RentalOrder;
+
 import java.math.BigDecimal;
 import java.sql.Date;
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "emp")
@@ -36,13 +39,22 @@ public class Emp {
     private String empStatus;
 
 
-
+	@OneToMany(mappedBy ="emp",cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<RentalOrder> rentalOrder;
 
     public Integer getEmpId() {
         return empId;
     }
 
-    public void setEmpId(Integer empId) {
+    public Set<RentalOrder> getRentalOrder() {
+		return rentalOrder;
+	}
+
+	public void setRentalOrder(Set<RentalOrder> rentalOrder) {
+		this.rentalOrder = rentalOrder;
+	}
+
+	public void setEmpId(Integer empId) {
         this.empId = empId;
     }
 
