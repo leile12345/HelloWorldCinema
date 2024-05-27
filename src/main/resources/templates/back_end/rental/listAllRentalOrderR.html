@@ -21,7 +21,7 @@
 
         <aside th:replace="~{/back_end/mem/management :: content}"></aside>
 
-		<main>
+        <main>
 
 			<div class="container">
 				
@@ -80,10 +80,10 @@
                             </td>
                             <td>
                                 <input type="text" name="emp.empId"  maxlength="4" style="width: 50px;" class="empSelect" th:value="${rentalOrder.emp != null ? rentalOrder.emp?.empId : ''}" onchange="updateEmpValues()">
-                                <!-- th:value="${rentalOrder.emp != null ? rentalOrder.emp?.empId : ''}" -->
+                                
                             </td>
                             <td>
-                                <form method="post" th:action="@{/rental/update}" th:object="${rentalOrder}">
+                                <form method="post" th:action="@{/rental/update}" th:object="${rentalOrder}" class="formf">
                                     <button type="submit" >審核</button>
                                     <input type="hidden" name="rentalId" th:value="${rentalOrder.rentalId}">
                                     <input type="hidden" name="mem.memId" th:value="${rentalOrder.mem.memId}">
@@ -110,45 +110,50 @@
 
 			</div>
 		</main>
-
         <script th:src="@{/back_end/js/management.js}"></script>
        
+ 
         <script>
             function updateResultValues() {
-                var resultSelects = document.querySelectorAll(".resultSelect");
-                var hiddenResults = document.querySelectorAll(".hiddenResult");
-                for (var i = 0; i < resultSelects.length; i++) {
+                let resultSelects = document.querySelectorAll(".resultSelect");
+                let hiddenResults = document.querySelectorAll(".hiddenResult");
+                for ( i = 0; i < resultSelects.length; i++) {
                     hiddenResults[i].value = resultSelects[i].value;
                 }
             }
         
             function updateEmpValues() {
-                var empSelects = document.querySelectorAll('.empSelect');
-                var hiddenEmps = document.querySelectorAll('.hiddenEmp');
-                for (var i = 0; i < empSelects.length; i++) {
+                let empSelects = document.querySelectorAll(".empSelect");
+                let  hiddenEmps = document.querySelectorAll(".hiddenEmp");
+
+                for (i = 0; i < empSelects.length; i++) {
                     hiddenEmps[i].value = empSelects[i].value;
                 }
             }
 
 
-            // document.addEventListener('DOMContentLoaded', function() {
-            //     var empSelects = document.querySelectorAll('.empSelect');
-            //     var hiddenEmps = document.querySelectorAll('.hiddenEmp');
-            //     for (var i = 0; i < empSelects.length; i++) {
-            //         empSelects[i].addEventListener('input', function() {
-                        
-            //             hiddenEmps[i].value = this.value;
-            //             console.log(this.valuee);
-            //         });
-            //     }
-            //     console.log(hiddenEmps[0].value);
-            //     console.log(hiddenEmps[2].value);
-        
-            //     var resultSelects = document.querySelectorAll('.resultSelect');
-            //     for (var i = 0; i < resultSelects.length; i++) {
-            //         resultSelects[i].addEventListener('input', updateResultValues);
-            //     }
-            // });
+            var isValid;
+            var forms = document.getElementsByClassName('formf');
+            for (let j = 0; j < forms.length; j++) {
+                forms[j].addEventListener('submit', function (e) {
+                    console.log(this);
+                    isValid = true;
+                    let empSelects = document.querySelectorAll(".empSelect");
+                    if (empSelects[j].value === "") {
+                        empSelects[j].classList.add("invalid");
+                        isValid = false;
+                    } else {
+                        empSelects[j].classList.remove("invalid");
+                    }
+                    if (!isValid) {
+                        e.preventDefault();
+                    }
+                });
+            }
+
+
+
+
         </script>
         
         

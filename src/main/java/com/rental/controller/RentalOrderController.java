@@ -127,7 +127,7 @@ public class RentalOrderController {
 	}
 
 	@PostMapping("update")
-	public String update(RentalOrder rentalOrder, BindingResult result, Model model) {
+	public String update(@Valid RentalOrder rentalOrder, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("errorMsgs", result.getAllErrors());
 			return "back_end/rental/update_rental";
@@ -220,6 +220,12 @@ public class RentalOrderController {
 	}
 
 	// ===============================================================
+	@GetMapping("/rentalOrderIndex")
+	public String rentalOrderIndex(Model model) {
+		return "front_end/rental/rental_index";
+	}
+	
+	
 	@GetMapping("/listAllRentalOrderF")
 	public String listAllRentalOrderF(HttpServletRequest req, Model model) {
 		Map<String, String[]> map = new HashMap<>(req.getParameterMap());

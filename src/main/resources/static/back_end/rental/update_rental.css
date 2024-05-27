@@ -16,10 +16,6 @@ main {
     width: 50vw;
   }
 
-
-
-
-
 ul {
     list-style: none; 
     padding: 0;
@@ -36,4 +32,7 @@ a {
 
 a:hover {
     text-decoration: underline; 
+}
+div.errorMsgs li{
+    color: red;
 }

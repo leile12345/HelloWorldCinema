@@ -98,4 +98,6 @@ button {
   font-size: 15px;
   text-align: center;
 }
-
+input.invalid {
+  background-color: #ffdddd;
+}
