@@ -64,5 +64,9 @@ public class RentalOrderService {
     	return repository.findRentalOrderByMem(mem);
     } 
 
-
+    public List<RentalOrder> getRentalOrderByPaymentStatus(String paymentStatus){
+    	
+    	return repository.findRentalOrderByPaymentStatus(paymentStatus);
+    } 
+    
 }

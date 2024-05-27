@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -97,12 +98,26 @@ public class RentalOrderController {
 			return "back_end/rental/listAllRentalOrderR";
 		}
 	}
-//    @PostMapping("/rental/review")
-//    public String updateRental(RentalOrder rentalOrder) {
-//
-//
-//        return "redirect:/rental/page"; 
-//    }
+	
+	@GetMapping("get_RentalOrder_For_Refund")
+	public String getRentalOrderForRefund(Model model) {
+
+		List<RentalOrder> rentalOrderForR = rentalOrderSvc.getRentalOrderByPaymentStatus("已付");
+	    List<RentalOrder> rentalOrderForRF = rentalOrderForR.stream()
+	            .filter(order -> "未退".equals(order.getDepositRefund()))
+	            .collect(Collectors.toList());
+		
+	    List<RentalOrder> list = rentalOrderSvc.getAllRentalOrder();
+	    model.addAttribute("AllRentalOrderListData", list);
+
+	    if (rentalOrderForRF.isEmpty()) {
+			model.addAttribute("errorMsgs", "查無相關資料");
+			return "back_end/rental/selectRentalOrder";
+		} else {
+			model.addAttribute("AllRentalOrderListData", rentalOrderForRF);
+			return "back_end/rental/listAllRentalOrder";
+		}
+	}
 
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("rentalId") Integer rentalId, Model model) {
