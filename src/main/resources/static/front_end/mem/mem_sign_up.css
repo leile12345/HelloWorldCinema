@@ -117,7 +117,7 @@ img.eye {
 h1{
   margin-bottom: 30px;
 }
-.errorMsgs, .error, .passError{
+.errorMsgs, .error, .Error{
   color: red;
   font-size: 14px;
   margin-bottom: 10px;

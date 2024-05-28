@@ -42,12 +42,12 @@ public class Mem {
 	private Integer memId;
 	
 	@NotEmpty(message="會員帳號: 請勿空白")
-	@Pattern(regexp = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$", message = "會員帳號: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間")
+	@Pattern(regexp = "^[a-zA-Z0-9_]{2,20}$", message = "會員帳號: 只能是英文字母、數字和_ , 且長度必需在2到20之間")
 	@Column(name = "mem_acount", updatable = false, unique = true)
 	private String memAcount;
 	
 	@NotEmpty(message="會員密碼: 請勿空白")
-	@Pattern(regexp = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$", message = "會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間")
+	@Pattern(regexp = "^[a-zA-Z0-9_]{2,20}$", message = "會員姓名: 只能是英文字母、數字和_ , 且長度必需在2到20之間")
 	@Column(name = "mem_password")
 	private String memPassword;
 	

@@ -1,6 +1,8 @@
 package com.filter;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -39,8 +41,10 @@ public class MemFilter implements Filter {
 	            
 	            chain.doFilter(req, res);
 	        } else {
-	            
-	            httpRes.sendRedirect(httpReq.getContextPath() + "/mem/login");
+	           
+	            String message = URLEncoder.encode("請先登入會員", StandardCharsets.UTF_8.toString());
+	            httpRes.sendRedirect(httpReq.getContextPath() + "/mem/login?message=" + message);
+
 	        }
 	    }
 

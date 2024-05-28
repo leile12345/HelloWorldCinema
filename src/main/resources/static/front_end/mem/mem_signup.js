@@ -44,18 +44,18 @@ function nextPrev(n) {
             document.getElementById("ps1").className += " invalid";
             document.getElementById("ps2").className += " invalid";
 
-            var existingErrorMsg = document.querySelector(".errorMsgs2 ul li.passError");
+            var existingErrorMsg = document.querySelector(".errorMsgs2 ul li.Error");
             if (!existingErrorMsg) {
                 let errorMsg_el = document.createElement("li");
-                errorMsg_el.className = "passError";
+                errorMsg_el.className = "Error";
                 errorMsg_el.innerText = "您輸入的兩個密碼並不相符，請再試一次。";
 
                 document.querySelector(".errorMsgs2 ul").appendChild(errorMsg_el);
             }
             return false;
         } else {
-            // 清除 passError 错误消息
-            var passErrorElement = document.querySelector(".errorMsgs2 ul li.passError");
+           
+            var passErrorElement = document.querySelector(".errorMsgs2 ul li.Error");
             if (passErrorElement) {
                 passErrorElement.remove();
             }
@@ -198,3 +198,31 @@ emailInput.addEventListener("blur", checkUniqueEmail);
 document.getElementById("nextBtn").addEventListener("click",function(){
     document.getElementById("passError").innerText = "";
 });
+
+
+window.onload = function() {
+    var inputs = document.querySelectorAll("input");
+
+    inputs.forEach(function(input) {
+        input.addEventListener("focus", function(e) {          
+
+            this.classList.remove('invalid');
+            
+        });
+    });
+
+    var memMobileInput = document.getElementById('memMobile1');
+    memMobileInput.addEventListener('input', function(event) {
+        if (!event.target.value.startsWith('09')) {
+            event.target.value = '09';
+        }
+        let currentValue = event.target.value;
+        const pattern = /^(09\d{0,8})$/;
+
+        if (!pattern.test(currentValue)) {
+            let matchedValue = currentValue.match(pattern);
+            event.target.value = matchedValue ? matchedValue[0] : '09';
+        }
+    });
+
+}

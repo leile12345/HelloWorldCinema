@@ -86,7 +86,7 @@
             <div class="tab">
             <p><label>信箱：<input type="text" name="memEmail" th:field="*{memEmail}" size="45" id="memEmail1"/></label></p>
             <p><label>地址：<input type="text" name="memAddr" th:field="*{memAddr}" size="45"/></label></p>
-            <p><label>手機：<input type="text" name="memMobile"  th:field="*{memMobile}" size="45" maxlength="10"/></label></p>
+            <p><label>手機：<input type="text" name="memMobile"  th:field="*{memMobile}" size="45" maxlength="10" id="memMobile1" pattern="09\d{8}"/></label></p>
             </div>
             
             <input type="hidden" name="memStatus"  th:field="*{memStatus}" th:value="${'未驗證'}" size="45" />
